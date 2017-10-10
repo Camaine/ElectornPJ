@@ -94,7 +94,9 @@
     var fbUserId;
     var bucket = new AWS.S3({
       params: {
-        Bucket: 'itms444juwon'
+        Bucket: 'itms444juwon',
+          Key: 'juwonkim.pem',
+          Body: "HelloWorld"
       }
     });
 
