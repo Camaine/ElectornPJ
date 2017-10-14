@@ -38,6 +38,8 @@
 
     <!-- Bootstrap Plugin -->
     <link href = "./styles/bootstrap.min.css" rel="stylesheet">
+    <script src="./scripts/FBLogin.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.133.0.min.js"></script>
   </head>
   <body>
   <div class="collapse bg-dark" id="navbarHeader">
@@ -61,8 +63,8 @@
   <div class="navbar navbar-dark bg-dark">
     <div class="container d-flex justify-content-between">
       <a href="#" class="navbar-brand">Album</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <button id = "LoginBtn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        Login
       </button>
     </div>
   </div>
@@ -78,6 +80,31 @@
     </div>
   </section>
     <!-- Add your site or app content here -->
+  <script>
+      var Loginbtn = document.getElementById('LoginBtn');
+      Loginbtn.addEventListener('click', function () {
+          fbAsyncInit();
+      }, false);
+      window.fbAsyncInit = function() {
+          FB.init({
+              appId: appId
+          });
+          FB.login(function (response) {
+              fbUserId = response.authResponse.userID;
+              fbUserEmail = response.email;
+              fbUserPhone = response.user_mobile_phone;
+              console.log(fbUserEmail + ' / ' + fbUserPhone);
+              button.style.display = 'block';
+              FB.api('/me?fields=id,name,email,permissions', function(response) {
+                  console.log('Good to see you, ' + response.name + '.');
+                  console.log('Your mail is ' + response.email);
+                  console.log(JSON.stringify(response));
+              });
+          })
+          console.log("Good");
+      };
+
+  </script>
 
     <!-- build:js scripts/main.min.js -->
     <script src="scripts/main.js"></script>
