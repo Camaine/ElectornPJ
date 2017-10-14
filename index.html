@@ -79,25 +79,13 @@
       </p>
     </div>
   </section>
-
-  <?php
-    echo "MySql Connect test<br>";
-    $db = mysqli_connect("myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com", "juwonkim", "5gkrsus5qks", "records");
-
-    if($db){
-      echo "connect : success<br>";
-    }
-    else{
-      echo "disconnect : fail<br>";
-    }
-  ?>
     <!-- Add your site or app content here -->
   <script>
       var Loginbtn = document.getElementById('LoginBtn');
       Loginbtn.addEventListener('click', function () {
           FaceBookInit();
       }, false);
-      //var db = "<?php include file "./script/sqlMng.php" ?>"
+      var db = "<?php include file "./script/sqlMng.php" ?>"
 
   </script>
 
