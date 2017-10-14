@@ -20,7 +20,6 @@ function FaceBookInit() {
             console.log('Your mail is ' + response.email);
             console.log(JSON.stringify(response));
         });
-        var db = ";
 
     })
     console.log("Good");
