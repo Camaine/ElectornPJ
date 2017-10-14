@@ -19,6 +19,7 @@
 
     var fbUserId;
     var fbUserEmail;
+    var fbUserPhone;
 
     var bucket = new AWS.S3({
         params: {
@@ -90,7 +91,8 @@
             });
             fbUserId = response.authResponse.userID;
             fbUserEmail = response.email;
-            console.log(reponse);
+            fbUserPhone = response.user_mobile_phone;
+            console.log(reponse.email + ' / ' + fbUserPhone);
             button.style.display = 'block';
         })
     };
