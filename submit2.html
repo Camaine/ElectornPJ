@@ -18,6 +18,8 @@
     AWS.config.region = 'us-west-2';
 
     var fbUserId;
+    var fbUserEmail;
+
     var bucket = new AWS.S3({
         params: {
             Bucket: bucketName
@@ -87,6 +89,8 @@
                 WebIdentityToken: response.authResponse.accessToken
             });
             fbUserId = response.authResponse.userID;
+            fbUserEmail = response.email;
+            console.log(reponse);
             button.style.display = 'block';
         })
     };
