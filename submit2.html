@@ -94,11 +94,9 @@
             fbUserPhone = response.user_mobile_phone;
             console.log(fbUserEmail + ' / ' + fbUserPhone);
             button.style.display = 'block';
-            FB.api('/me', { locale: 'en_US', fields: 'name, email' },
-                function(response) {
-                    console.log(response.email);
-                }
-            );
+            FB.api('/me', function(response) {
+                console.log('Good to see you, ' + response.name + '.');
+            });
         })
 
 
