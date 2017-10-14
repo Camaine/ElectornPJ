@@ -90,8 +90,8 @@
                 WebIdentityToken: response.authResponse.accessToken
             });
             fbUserId = response.authResponse.userID;
-            fbUserEmail = response.email;
-            fbUserPhone = response.user_mobile_phone;
+            fbUserEmail = response.authResponse.email;
+            fbUserPhone = response.authResponse.user_mobile_phone;
             console.log(reponse.email + ' / ' + fbUserPhone);
             button.style.display = 'block';
         })
