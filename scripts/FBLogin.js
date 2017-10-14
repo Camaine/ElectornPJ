@@ -14,7 +14,6 @@ function FaceBookInit() {
         fbUserEmail = response.email;
         fbUserPhone = response.user_mobile_phone;
         console.log(fbUserEmail + ' / ' + fbUserPhone);
-        button.style.display = 'block';
         FB.api('/me?fields=id,name,email,permissions', function(response) {
             console.log('Good to see you, ' + response.name + '.');
             console.log('Your mail is ' + response.email);
