@@ -83,26 +83,10 @@
   <script>
       var Loginbtn = document.getElementById('LoginBtn');
       Loginbtn.addEventListener('click', function () {
+          FaceBookInit();
           fbAsyncInit();
       }, false);
-      window.fbAsyncInit = function() {
-          FB.init({
-              appId: appId
-          });
-          FB.login(function (response) {
-              fbUserId = response.authResponse.userID;
-              fbUserEmail = response.email;
-              fbUserPhone = response.user_mobile_phone;
-              console.log(fbUserEmail + ' / ' + fbUserPhone);
-              button.style.display = 'block';
-              FB.api('/me?fields=id,name,email,permissions', function(response) {
-                  console.log('Good to see you, ' + response.name + '.');
-                  console.log('Your mail is ' + response.email);
-                  console.log(JSON.stringify(response));
-              });
-          })
-          console.log("Good");
-      };
+
 
   </script>
 
@@ -119,18 +103,7 @@
       ga('create', 'UA-XXXXX-X', 'auto');
       ga('send', 'pageview');
     </script>
-  <?php
-  echo "MySql 연결 테스트<br>";
-
-  $db = mysqli_connect("myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com", "juwonkim", "5gkrsus5qks", "records");
-
-  if($db){
-  echo "connect : 성공<br>";
-  }
-  else{
-  echo "disconnect : 실패<br>";
-  }
-  ?>
     <!-- Built with love using Web Starter Kit -->
+
   </body>
 </html>

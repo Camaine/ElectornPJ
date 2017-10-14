@@ -63,32 +63,4 @@ function listObjs() {
         }
     });
 }
-/*!
- * Login to your application using Facebook.
- * Uses the Facebook SDK for JavaScript available here:
- * https://developers.facebook.com/docs/javascript/quickstart/
- */
 
-function FaceBookInit(){
-    FB.init({
-        appId: appId
-    });
-
-    FB.login(function (response) {
-        bucket.config.credentials = new AWS.WebIdentityCredentials({
-            ProviderId: 'graph.facebook.com',
-            RoleArn: roleArn,
-            WebIdentityToken: response.authResponse.accessToken
-        });
-        fbUserId = response.authResponse.userID;
-        fbUserEmail = response.email;
-        fbUserPhone = response.user_mobile_phone;
-        console.log(fbUserEmail + ' / ' + fbUserPhone);
-        button.style.display = 'block';
-        FB.api('/me?fields=id,name,email,permissions', function(response) {
-            console.log('Good to see you, ' + response.name + '.');
-            console.log('Your mail is ' + response.email);
-            console.log(JSON.stringify(response));
-        });
-    })
-};
