@@ -93,17 +93,16 @@
       ga('send', 'pageview');
     </script>
   <?php
-  $servername = "myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com;
-  $username = "juwonkim";
-  $password = "5gkrsus5qks";
+  echo "MySql 연결 테스트<br>";
 
-$conn = mysqli_connect($servername, $username, $password);
+  $db = mysqli_connect("myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com", "juwonkim", "5gkrsus5qks", "records");
 
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-echo "Connected successfully";
+  if($db){
+  echo "connect : 성공<br>";
+  }
+  else{
+  echo "disconnect : 실패<br>";
+  }
   ?>
     <!-- Built with love using Web Starter Kit -->
   </body>
