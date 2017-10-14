@@ -40,7 +40,7 @@
     <link href = "./styles/bootstrap.min.css" rel="stylesheet">
 
     <!-- AWS SDK for JavaScript -->
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.129.0.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.133.0.min.js"></script>
 
   </head>
   <body>
@@ -81,110 +81,231 @@
 
   <!-- AWS SDK S3 -->
 
-  <input type="file" id="file-chooser" />
-  <button id="upload-button" style="display:none">Upload to S3</button>
-  <div id="results"></div>
-  <div id="fb-root"></div>
+
+  <div id="app">
+    <input type="file" id="photoupload" />
+    <button id="create_gallery" onclick="createAlbum('album');">create gallery</button>
+    <button id="view_list" onclick="listAlbums();">list gallery</button>
+    <button id="upload" onclick="addPhoto('.gallery1');">Upload Photo</button>
+    <button id="upload-button" style="display:none">Upload to S3</button>
+    <div id="results"></div>
+    <div id="fb-root"></div>
+    <h1>My Photo Albums App</h1>
+  </div>
   <script type="text/javascript">
-    var appId = '363763484061000';
-    var roleArn = 'arn:aws:s3:::itms444juwon';
-    var bucketName = 'itms444juwon';
-    AWS.config.region = 'us-west-2';
 
-    var fbUserId;
-    var bucket = new AWS.S3({
-      params: {
-        Bucket: 'itms444juwon',
-          Key: 'juwonkim.pem',
-          Body: "HelloWorld"
-      }
-    });
+      var albumBucketName = 'itms444juwon';
+    var bucketRegion = 'us-west-2';
+    var IdentityPoolId = 'us-east-2_MDn4cVooH';
 
-    var fileChooser = document.getElementById('file-chooser');
-    var button = document.getElementById('upload-button');
-    var results = document.getElementById('results');
+    console.log('region : '+bucketRegion);
+    console.log('AWS config');
 
-    button.addEventListener('click', function () {
-      var file = fileChooser.files[0];
-      if (file) {
-        results.innerHTML = '';
-        //Object key will be facebook-USERID#/FILE_NAME
-        var objKey = 'facebook-' + fbUserId + '/' + file.name;
-        var params = {
-          Key: objKey,
-          ContentType: file.type,
-          Body: file,
-          ACL: 'public-read'
-        };
-
-        bucket.putObject(params, function (err, data) {
-          if (err) {
-            results.innerHTML = 'ERROR: ' + err;
-          } else {
-            listObjs();
-          }
+     AWS.config.update({
+            accessKeyId: 'AKIAIOEQBRCNB57I2AXA',
+            secretAccessKey: 'iVgVVdeHKtRCcBs8uUafD/xvTe0rwa9o9vk0iV',
+            region: bucketRegion,
+            credentials: new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: IdentityPoolId
+            })
         });
-      } else {
-        results.innerHTML = 'Nothing to upload.';
-      }
-    }, false);
+        console.log('AccessKey ID : ' + AWS.apiVersion);
 
-    function listObjs() {
-      var prefix = 'facebook-' + fbUserId;
-      bucket.listObjects({
-        Prefix: prefix
-      }, function (err, data) {
-        if (err) {
-          results.innerHTML = 'ERROR: ' + err;
-        } else {
-          var objKeys = "";
-          data.Contents.forEach(function (obj) {
-            objKeys += obj.Key + "<br>";
-          });
-          results.innerHTML = objKeys;
+    console.log('new S3 variable');
+    var s3 = new AWS.S3({
+        apiVersion: '2006-03-01',
+        params: {
+            Bucket: albumBucketName,
+            Key : 'Sample',
+            ACL : 'public-read'
         }
-      });
+    });
+    console.log('s3 accessid : ' + s3.apiVersion);
+    console.log('s3 bucket : ' + s3.Bucket);
+
+    function listAlbums() {
+        s3.listObjects({Delimiter: '/'}, function(err, data) {
+            if (err) {
+                return alert('There was an error listing your albums: ' + err.message);
+            } else {
+                var albums = data.CommonPrefixes.map(function(commonPrefix) {
+                    var prefix = commonPrefix.Prefix;
+                    var albumName = decodeURIComponent(prefix.replace('/', ''));
+                    return getHtml([
+                        '<li>',
+                        '<span onclick="deleteAlbum(\'' + albumName + '\')">X</span>',
+                        '<span onclick="viewAlbum(\'' + albumName + '\')">',
+                        albumName,
+                        '</span>',
+                        '</li>'
+                    ]);
+                });
+                var message = albums.length ?
+                    getHtml([
+                        '<p>Click on an album name to view it.</p>',
+                        '<p>Click on the X to delete the album.</p>'
+                    ]) :
+                    '<p>You do not have any albums. Please Create album.';
+                var htmlTemplate = [
+                    '<h2>Albums</h2>',
+                    message,
+                    '<ul>',
+                    getHtml(albums),
+                    '</ul>',
+                    '<button onclick="createAlbum(prompt(\'Enter Album Name:\'))">',
+                    'Create New Album',
+                    '</button>'
+                ]
+                document.getElementById('app').innerHTML = getHtml(htmlTemplate);
+            }
+        });
     }
 
 
-    /*!
-     * Login to your application using Facebook.
-     * Uses the Facebook SDK for JavaScript available here:
-     * https://developers.facebook.com/docs/javascript/quickstart/
-     */
+    function createAlbum(albumName) {
+        albumName = albumName.trim();
+        console.log("Name : "+albumName);
+        if (!albumName) {
+            return alert('Album names must contain at least one non-space character.');
+        }
+        if (albumName.indexOf('/') !== -1) {
+            return alert('Album names cannot contain slashes.');
+        }
+        var albumKey = encodeURIComponent(albumName) + '/';
 
-    window.fbAsyncInit = function () {
-      FB.init({
-        appId      : '363763484061000',
-        xfbml      : true,
-        version    : 'v2.10'
-      });
-
-      FB.login(function (response) {
-        bucket.config.credentials = new AWS.WebIdentityCredentials({
-          ProviderId: 'graph.facebook.com',
-          RoleArn: roleArn,
-          WebIdentityToken: response.authResponse.accessToken
+        s3.headObject({Key: albumKey}, function(err, data) {
+            if (!err) {
+                return alert('Album already exists.');
+            }
+            console.log("Album key : "+albumKey);
+            if (err.code !== 'NotFound') {
+                console.log('data : '+data + ' / ' + err.code);
+                return alert('There was an error creating your album1: ' + err.message);
+            }
+            s3.putObject({Key: albumKey}, function(err, data) {
+                if (err) {
+                    return alert('There was an error creating your album2: ' + err.message);
+                }
+                alert('Successfully created album.');
+                viewAlbum(albumName);
+            });
         });
-        fbUserId = response.authResponse.userID;
-        button.style.display = 'block';
-      })
-    };
+    }
 
-    // Load the Facebook SDK asynchronously
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {
-        return;
-      }
-      js = d.createElement(s);
-      js.id = id;
-      js.src = "https://connect.facebook.net/en_US/all.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    function viewAlbum(albumName) {
+        var albumPhotosKey = encodeURIComponent(albumName) + '//';
+        s3.listObjects({Prefix: albumPhotosKey}, function(err, data) {
+            if (err) {
+                return alert('There was an error viewing your album: ' + err.message);
+            }
+            // `this` references the AWS.Response instance that represents the response
+            var href = this.request.httpRequest.endpoint.href;
+            var bucketUrl = href + albumBucketName + '/';
+
+            var photos = data.Contents.map(function(photo) {
+                var photoKey = photo.Key;
+                var photoUrl = bucketUrl + encodeURIComponent(photoKey);
+                return getHtml([
+                    '<span>',
+                    '<div>',
+                    '<img style="width:128px;height:128px;" src="' + photoUrl + '"/>',
+                    '</div>',
+                    '<div>',
+                    '<span onclick="deletePhoto(\'' + albumName + "','" + photoKey + '\')">',
+                    'X',
+                    '</span>',
+                    '<span>',
+                    photoKey.replace(albumPhotosKey, ''),
+                    '</span>',
+                    '</div>',
+                    '<span>',
+                ]);
+            });
+            var message = photos.length ?
+                '<p>Click on the X to delete the photo</p>' :
+                '<p>You do not have any photos in this album. Please add photos.</p>';
+            var htmlTemplate = [
+                '<h2>',
+                'Album: ' + albumName,
+                '</h2>',
+                message,
+                '<div>',
+                getHtml(photos),
+                '</div>',
+                '<input id="photoupload" type="file" accept="image/*">',
+                '<button id="addphoto" onclick="addPhoto(\'' + albumName +'\')">',
+                'Add Photo',
+                '</button>',
+                '<button onclick="listAlbums()">',
+                'Back To Albums',
+                '</button>',
+            ]
+            document.getElementById('app').innerHTML = getHtml(htmlTemplate);
+        });
+    }
+
+    function addPhoto(albumName) {
+        var files = document.getElementById('photoupload').files;
+        if (!files.length) {
+            return alert('Please choose a file to upload first.');
+        }
+        var file = files[0];
+        var fileName = file.name;
+        var albumPhotosKey = encodeURIComponent(albumName) + '//';
+
+        var photoKey = albumPhotosKey + fileName;
+        s3.upload({
+            Key: photoKey,
+            Body: file,
+            ACL: 'public-read'
+        }, function(err, data) {
+            if (err) {
+                return alert('There was an error uploading your photo: ' + err.message);
+            }
+            alert('Successfully uploaded photo.');
+            viewAlbum(albumName);
+        });
+    }
+
+    function deletePhoto(albumName, photoKey) {
+        s3.deleteObject({Key: photoKey}, function(err, data) {
+            if (err) {
+                return alert('There was an error deleting your photo: ', err.message);
+            }
+            alert('Successfully deleted photo.');
+            viewAlbum(albumName);
+        });
+    }
+
+    function deleteAlbum(albumName) {
+        var albumKey = encodeURIComponent(albumName) + '/';
+        s3.listObjects({Prefix: albumKey}, function(err, data) {
+            if (err) {
+                return alert('There was an error deleting your album: ', err.message);
+            }
+            var objects = data.Contents.map(function(object) {
+                return {Key: object.Key};
+            });
+            s3.deleteObjects({
+                Delete: {Objects: objects, Quiet: true}
+            }, function(err, data) {
+                if (err) {
+                    return alert('There was an error deleting your album: ', err.message);
+                }
+                alert('Successfully deleted album.');
+                listAlbums();
+            });
+        });
+    }
   </script>
 
     <!-- Add your site or app content here -->
+
+
+
+
+
+
 
     <!-- build:js scripts/main.min.js -->
     <script src="scripts/main.js"></script>
@@ -200,5 +321,5 @@
       ga('send', 'pageview');
     </script>
     <!-- Built with love using Web Starter Kit -->
-  </body>
+  </bodyo>
 </html>
