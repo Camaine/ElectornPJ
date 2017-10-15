@@ -84,6 +84,7 @@
                 if (err) {
                     colorresults.innerHTML = 'ERROR: ' + err;
                 } else {
+                    document.getElementById('colorimg').src = s3url + bucketName+"/"+'facebook-' + UserIdforaws + "/" + file.name;
                     listObjs();
                 }
             });
@@ -93,7 +94,7 @@
     }, false);
 
     function listObjs() {
-        var prefix = 'facebook-' + UserIdforaws
+        var prefix = 'facebook-' + UserIdforaws;
         S3bucket.listObjects({
             Prefix: prefix
         }, function (err, data) {
@@ -101,13 +102,10 @@
                 colorresults.innerHTML = 'ERROR: ' + err;
             } else {
                 var objKeys = "";
-                var temps3url = s3url;
-                var tempbucketname = bucketName;
                 data.Contents.forEach(function (obj) {
                     objKeys += obj.Key + "<br>";
                 });
-                colorresults.innerHTML = temps3url + tempbucketname+"/"+objKeys;
-                document.getElementById('colorimg').src = temps3url + tempbucketname+"/"+objKeys;
+                colorresults.innerHTML = objKeys;
             }
         });
     }
