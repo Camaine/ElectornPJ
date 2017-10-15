@@ -20,6 +20,7 @@
     var bucketName = 'itms444juwon';
     var grayBucket = 'afterrender';
     AWS.config.region = 'us-west-2';
+    var s3url = 'https://s3-us-west-2.amazonaws.com/';
 
     var UserIdforaws = localStorage.getItem("userFBid");
     var accessToken = localStorage.getItem("accessTokenFB");
@@ -100,11 +101,13 @@
                 colorresults.innerHTML = 'ERROR: ' + err;
             } else {
                 var objKeys = "";
+                var temps3url = s3url;
+                var tempbucketname = bucketName;
                 data.Contents.forEach(function (obj) {
                     objKeys += obj.Key + "<br>";
                 });
-                colorresults.innerHTML = "https://s3-us-west-2.amazonaws.com/" + bucketName+"/"+objKeys;
-                document.getElementById('colorimg').src = "https://s3-us-west-2.amazonaws.com/" + bucketName+"/"+objKeys+ ReturnURL();
+                colorresults.innerHTML = temps3url + tempbucketname+"/"+objKeys;
+                document.getElementById('colorimg').src = temps3url + tempbucketname+"/"+objKeys;
             }
         });
     }
