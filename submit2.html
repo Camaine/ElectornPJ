@@ -31,6 +31,12 @@
     var button = document.getElementById('upload-button');
     var results = document.getElementById('results');
 
+    var S3bucket = new AWS.S3({
+        params: {
+            Bucket: 'itms444juwon'
+        }
+    });
+
     button.addEventListener('click', function () {
         var file = fileChooser.files[0];
         if (file) {
@@ -44,7 +50,7 @@
                 ACL: 'public-read'
             };
 
-            bucket.putObject(params, function (err, data) {
+            S3bucket.putObject(params, function (err, data) {
                 if (err) {
                     results.innerHTML = 'ERROR: ' + err;
                 } else {
@@ -58,7 +64,7 @@
 
     function listObjs() {
         var prefix = 'facebook-' + UserIdforaws
-        bucket.listObjects({
+        S3bucket.listObjects({
             Prefix: prefix
         }, function (err, data) {
             if (err) {
