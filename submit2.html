@@ -15,7 +15,7 @@
 <input type="file" id="file-chooser" />
 <button id="upload-button">Upload to S3</button>
 <output id = "list"></output>
-<img id = "colorimg" src="">
+<img id = "colorimg" src="" crossOrigin="anonymous">
 <div id="colorresults"></div>
 <div id="grayresults"></div>
 <div id="fb-root"></div>
@@ -87,12 +87,13 @@
                 if (err) {
                     colorresults.innerHTML = 'ERROR: ' + err;
                 } else {
-                    document.getElementById('colorimg').src = s3url + bucketName+"/"+'facebook-' + UserIdforaws + "/" + file.name;
-                    Caman('#colorimg', function () {
+                    FULL_IMAGE(s3url + bucketName+"/"+'facebook-' + UserIdforaws + "/" + file.name);
+                    listObjs();
+                    Caman("#colorimg", function () {
                         this.vintage();
                         this.render();
+                        console.log("render");
                     });
-                    listObjs();
                 }
             });
         } else {
@@ -143,6 +144,26 @@
 
             // Read in the image file as a data URL.
             reader.readAsDataURL(f);
+
+
+    }
+
+    function FULL_IMAGE(fimage) {
+        var loaded = false;
+        function loadHandler() {
+            if (loaded) {
+                return;
+            }
+            loaded = true;
+            /* your code */
+        }
+        var img = document.getElementById('colorimg');
+        img.onload = loadHandler;
+        img.crossOrigin = '';
+        img.src = fimage;
+        if (img.complete) {
+            loadHandler();
+        }
     }
 
     fileChooser.addEventListener('change', handleFileSelect, false);
