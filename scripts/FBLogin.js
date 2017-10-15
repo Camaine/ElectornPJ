@@ -2,7 +2,6 @@ var appId = '363763484061000';
 
 var fbUserId;
 var fbUserName;
-var fbUserPhone;
 var accesstoken;
 var bucket;
 
