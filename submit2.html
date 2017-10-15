@@ -4,6 +4,7 @@
   <title>AWS SDK for JavaScript - Sample Application</title>
   <meta charset="utf-8">
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.133.0.min.js"></script>
+  <script src="./scripts/FBLogin.js"></script>
 </head>
 
 <body>
@@ -11,5 +12,65 @@
 <button id="upload-button">Upload to S3</button>
 <div id="results"></div>
 <div id="fb-root"></div>
+<script>
+    var appId = '363763484061000';
+    var roleArn = 'arn:aws:iam::186502234717:role/AWSS3facebookRole';
+    var bucketName = 'itms444juwon';
+    AWS.config.region = 'us-west-2';
+
+    var UserIdforaws = fbUserId;
+
+    var bucket = new AWS.S3({
+        params: {
+            Bucket: bucketName
+        }
+    });
+
+    var fileChooser = document.getElementById('file-chooser');
+    var button = document.getElementById('upload-button');
+    var results = document.getElementById('results');
+
+    button.addEventListener('click', function () {
+        var file = fileChooser.files[0];
+        if (file) {
+            results.innerHTML = '';
+            //Object key will be facebook-USERID#/FILE_NAME
+            var objKey = 'facebook-' + UserIdforaws + '/' + file.name;
+            var params = {
+                Key: objKey,
+                ContentType: file.type,
+                Body: file,
+                ACL: 'public-read'
+            };
+
+            bucket.putObject(params, function (err, data) {
+                if (err) {
+                    results.innerHTML = 'ERROR: ' + err;
+                } else {
+                    listObjs();
+                }
+            });
+        } else {
+            results.innerHTML = 'Nothing to upload.';
+        }
+    }, false);
+
+    function listObjs() {
+        var prefix = 'facebook-' + UserIdforaws
+        bucket.listObjects({
+            Prefix: prefix
+        }, function (err, data) {
+            if (err) {
+                results.innerHTML = 'ERROR: ' + err;
+            } else {
+                var objKeys = "";
+                data.Contents.forEach(function (obj) {
+                    objKeys += obj.Key + "<br>";
+                });
+                results.innerHTML = objKeys;
+            }
+        });
+    }
+</script>
 </body>
 </html>

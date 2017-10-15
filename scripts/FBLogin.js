@@ -24,7 +24,8 @@ function FaceBookInit() {
 };
 
 function DBupdate(){
-    window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/index.php?userid=" + fbUserId + "&username=" + fbUserName, '_blank');
+    var db = window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/index.php?userid=" + fbUserId + "&username=" + fbUserName, '_blank');
+    db.close();
 }
 
 (function (d, s, id) {
