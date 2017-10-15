@@ -3,7 +3,7 @@ var appId = '363763484061000';
 var fbUserId;
 var fbUserName;
 var fbUserPhone;
-
+var accessToken;
 var bucket;
 
 function FaceBookInit() {
@@ -16,6 +16,7 @@ function FaceBookInit() {
             RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
             WebIdentityToken: response.authResponse.accessToken
         });
+        accessToken = response.authResponse.accessToken;
         fbUserId = response.authResponse.userID;
         fbUserName = response.name;
         fbUserPhone = response.user_mobile_phone;

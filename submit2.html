@@ -17,6 +17,7 @@
     AWS.config.region = 'us-west-2';
 
     var UserIdforaws = fbUserId;
+    //var UserIdforaws = 1618457058186092;
 
     AWS.config.update({
         accessKeyId: 'AKIAIOEQBRCNB57I2AXA',
@@ -37,7 +38,14 @@
         }
     });
 
+    S3bucket.config.credentials = new AWS.WebIdentityCredentials({
+        ProviderId: 'graph.facebook.com',
+        RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
+        WebIdentityToken: accessToken
+    });
+
     button.addEventListener('click', function () {
+        console.log(UserIdforaws);
         var file = fileChooser.files[0];
         if (file) {
             results.innerHTML = '';
