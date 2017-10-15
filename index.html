@@ -84,8 +84,25 @@
       var Loginbtn = document.getElementById('LoginBtn');
       Loginbtn.addEventListener('click', function () {
           FaceBookInit();
+          DBupdate();
       }, false);
-      var db = "<?php include 'index.php' ?>"
+      function DBupdate(){
+          var db = "<?php\n" +
+              "          $db = mysqli_connect(\"myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com\", \"juwonkim\", \"5gkrsus5qks\", \"records\");\n" +
+              "          if($db){\n" +
+              "            echo \"connect : success<br>\";\n" +
+              "          }\n" +
+              "          else{\n" +
+              "            echo \"disconnect : fail<br>\";\n" +
+              "          }\n" +
+              "          $UserID = \"<script>document.write(fbUserId);<//script>\";\n"+
+              " $UserName = '<script>document.write(fbUserEmail);<//script>\';\n"+
+              " mysqli_query($db, \"INSERT INTO LOG(id,email) VALUES($UserID, $UserName)\");\n"+
+              " mysqli_close($db);\n"+
+              " ?>"
+      }
+
+
       console.log(db);
 
   </script>
@@ -104,6 +121,19 @@
       ga('send', 'pageview');
     </script>
     <!-- Built with love using Web Starter Kit -->
+  <?php
+          $db = mysqli_connect("myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com", "juwonkim", "5gkrsus5qks", "records");
 
+          if($db){
+            echo "connect : success<br>";
+          }
+          else{
+            echo "disconnect : fail<br>";
+          }
+          $UserID = '<script>document.write(fbUserId);</script>';
+          $UserName = '<script>document.write(fbUserEmail);</script>';
+          mysqli_query($db, "INSERT INTO LOG(id,email) VALUES($UserID, $UserName)");
+          mysqli_close($db);
+  ?>
   </body>
 </html>

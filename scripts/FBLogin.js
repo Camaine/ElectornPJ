@@ -11,7 +11,7 @@ function FaceBookInit() {
     });
     FB.login(function (response) {
         fbUserId = response.authResponse.userID;
-        fbUserEmail = response.email;
+        fbUserEmail = response.name;
         fbUserPhone = response.user_mobile_phone;
         console.log(fbUserEmail + ' / ' + fbUserPhone);
         FB.api('/me?fields=id,name,email,permissions', function(response) {
