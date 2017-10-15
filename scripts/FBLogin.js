@@ -18,11 +18,29 @@ function FaceBookInit() {
             console.log('Good to see you, ' + response.name + '.');
             console.log('Your mail is ' + response.email);
             console.log(JSON.stringify(response));
+            DBupdate();
         });
 
     })
     console.log("Good");
 };
+
+function DBupdate(){
+    var db = "<?php\n" +
+        "          $db = mysqli_connect(\"myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com\", \"juwonkim\", \"5gkrsus5qks\", \"records\");\n" +
+        "          if($db){\n" +
+        "            echo \"connect : success<br>\";\n" +
+        "          }\n" +
+        "          else{\n" +
+        "            echo \"disconnect : fail<br>\";\n" +
+        "          }\n" +
+        "          $UserID = \"<script>document.write(fbUserId);<//script>\";\n"+
+        " $UserName = '<script>document.write(fbUserEmail);<//script>\';\n"+
+        " mysqli_query($db, \"INSERT INTO LOG(id,email) VALUES($UserID, $UserName)\");\n"+
+        " mysqli_close($db);\n"+
+        " ?>"
+    console.log(db);
+}
 
 (function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
