@@ -81,6 +81,11 @@
   </section>
     <!-- Add your site or app content here -->
   <script>
+      bucket = new AWS.S3({
+          params: {
+              Bucket: 'itms444juwon'
+          }
+      });
       var Loginbtn = document.getElementById('LoginBtn');
       Loginbtn.addEventListener('click', function () {
           FaceBookInit();

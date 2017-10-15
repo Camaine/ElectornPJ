@@ -4,11 +4,7 @@ var fbUserId;
 var fbUserName;
 var fbUserPhone;
 
-var bucket = new AWS.S3({
-    params: {
-        Bucket: 'itms444juwon'
-    }
-});
+var bucket;
 
 function FaceBookInit() {
     FB.init({
