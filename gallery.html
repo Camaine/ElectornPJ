@@ -139,7 +139,7 @@
               } else {
                   var objKeys = "";
                   var htmlPhoto = "";
-                  var photourl = s3url + bucketName+"/"+ prefix +"/";
+                  var photourl = s3url + bucketName+"/";
                   data.Contents.forEach(function (obj) {
                       objKeys += obj.Key + "<br>";
                       htmlPhoto += "<img class = \"thumb\" src = \""+photourl + obj.Key + "\"/> <br>";
