@@ -13,17 +13,18 @@
 <div id="results"></div>
 <div id="fb-root"></div>
 <script>
-    var appId = '363763484061000';
-    var roleArn = 'arn:aws:iam::186502234717:role/AWSS3facebookRole';
     var bucketName = 'itms444juwon';
     AWS.config.region = 'us-west-2';
 
     var UserIdforaws = fbUserId;
 
-    var bucket = new AWS.S3({
-        params: {
-            Bucket: bucketName
-        }
+    AWS.config.update({
+        accessKeyId: 'AKIAIOEQBRCNB57I2AXA',
+        secretAccessKey: 'iVgVVdeHKtRCcBs8uUafD/xvTe0rwa9o9vk0iV',
+        region: 'us-west-2';
+        credentials: new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: 'us-east-2_MDn4cVooH'
+        })
     });
 
     var fileChooser = document.getElementById('file-chooser');

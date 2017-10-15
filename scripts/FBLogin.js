@@ -4,12 +4,22 @@ var fbUserId;
 var fbUserName;
 var fbUserPhone;
 
+var bucket = new AWS.S3({
+    params: {
+        Bucket: 'itms444juwon'
+    }
+});
 
 function FaceBookInit() {
     FB.init({
         appId: appId
     });
     FB.login(function (response) {
+        bucket.config.credentials = new AWS.WebIdentityCredentials({
+            ProviderId: 'graph.facebook.com',
+            RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
+            WebIdentityToken: response.authResponse.accessToken
+        });
         fbUserId = response.authResponse.userID;
         fbUserName = response.name;
         fbUserPhone = response.user_mobile_phone;
