@@ -3,7 +3,7 @@ var appId = '363763484061000';
 var fbUserId;
 var fbUserName;
 var fbUserPhone;
-var accessToken;
+var accesstoken;
 var bucket;
 
 function FaceBookInit() {
@@ -24,7 +24,7 @@ function FaceBookInit() {
             console.log('Good to see you, ' + response.name + '.');
             console.log(JSON.stringify(response));
             localStorage.setItem("userFBid", fbUserId);
-            localStorage.setItem("accessTokenFB", accessToken);
+            localStorage.setItem("accessTokenFB", accesstoken);
             DBupdate();
         });
 
@@ -33,8 +33,8 @@ function FaceBookInit() {
 };
 
 function DBupdate(){
-    var db = window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/index.php?userid=" + fbUserId + "&username=" + fbUserName + "&accessToken=" + accessToken, '_blank');
-    db.close();
+    var db = window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/index.php?userid=" + fbUserId + "&username=" + fbUserName + "&accesstoken=" + accesstoken, '_blank');
+    //db.close();
 }
 
 (function (d, s, id) {
