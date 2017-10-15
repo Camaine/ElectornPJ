@@ -73,43 +73,7 @@
     <div class="container">
 
       <div class="row">
-        <div class="card">
-          <img data-src="holder.js/100px280/thumb" alt="Card image cap">
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
-        <div class="card">
-          <img data-src="holder.js/100px280/thumb" alt="Card image cap">
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
-        <div class="card">
-          <img data-src="holder.js/100px280/thumb" alt="Card image cap">
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
-
-        <div class="card">
-          <img data-src="holder.js/100px280/thumb" alt="Card image cap">
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
-        <div class="card">
-          <img data-src="holder.js/100px280/thumb" alt="Card image cap">
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
-        <div class="card">
-          <img data-src="holder.js/100px280/thumb" alt="Card image cap">
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
-
-        <div class="card">
-          <img data-src="holder.js/100px280/thumb" alt="Card image cap">
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
-        <div class="card">
-          <img data-src="holder.js/100px280/thumb" alt="Card image cap">
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
-        <div class="card">
-          <img data-src="holder.js/100px280/thumb" alt="Card image cap">
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <div class="card" id = "colorimg">
         </div>
       </div>
 
@@ -174,17 +138,13 @@
                   colorresults.innerHTML = 'ERROR: ' + err;
               } else {
                   var objKeys = "";
+                  var htmlPhoto = "";
                   var photourl = s3url + bucketName+"/"+ prefix +"/";
                   data.Contents.forEach(function (obj) {
                       objKeys += obj.Key + "<br>";
-                      var htmlTemplate = [
-                              '<span>',
-                              '<div>',
-                              '<img style="width:128px;height:128px;" src="' + photourl + obj.Key + '"/>',
-                              '</div>',
-                              '<span>',
-                      ]
+                      htmlPhoto += "<img class = \"thumb\" src = \""+photourl + obj.Key + "\"/> <br>";
                   });
+                  document.getElementById("colorimg").innerHTML = htmlPhoto;
               }
           });
       }
