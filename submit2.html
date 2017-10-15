@@ -16,7 +16,8 @@
     var bucketName = 'itms444juwon';
     AWS.config.region = 'us-west-2';
 
-    var UserIdforaws = fbUserId;
+    var UserIdforaws = localStorage.getItem("userFBid");
+    var accessToken = localStorage.getItem("accessTokenFB");
     //var UserIdforaws = 1618457058186092;
 
     AWS.config.update({

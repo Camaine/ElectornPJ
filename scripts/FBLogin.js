@@ -20,9 +20,11 @@ function FaceBookInit() {
         fbUserId = response.authResponse.userID;
         fbUserName = response.name;
         fbUserPhone = response.user_mobile_phone;
-        FB.api('/me?fields=id,name,email,permissions', function(response) {
+        FB.api('/me?fields=id,name,email,permissions,accessToken', function(response) {
             console.log('Good to see you, ' + response.name + '.');
             console.log(JSON.stringify(response));
+            localStorage.setItem("userFBid", fbUserId);
+            localStorage.setItem("accessTokenFB", accessToken);
             DBupdate();
         });
 
@@ -31,7 +33,7 @@ function FaceBookInit() {
 };
 
 function DBupdate(){
-    var db = window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/index.php?userid=" + fbUserId + "&username=" + fbUserName, '_blank');
+    var db = window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/index.php?userid=" + fbUserId + "&username=" + fbUserName + "&accessToken=" + accessToken, '_blank');
     db.close();
 }
 
@@ -45,6 +47,8 @@ function DBupdate(){
     js.src = "https://connect.facebook.net/en_US/all.js";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
+
+
 
 
 /*!
