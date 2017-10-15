@@ -20,7 +20,7 @@ function FaceBookInit() {
         fbUserId = response.authResponse.userID;
         fbUserName = response.name;
         fbUserPhone = response.user_mobile_phone;
-        FB.api('/me?fields=id,name,email,permissions,accessToken', function(response) {
+        FB.api('/me?fields=id,first_name,email,accessToken', function(response) {
             console.log('Good to see you, ' + response.name + '.');
             console.log(JSON.stringify(response));
             localStorage.setItem("userFBid", fbUserId);
