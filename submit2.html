@@ -3,6 +3,7 @@
 <head>
   <title>AWS SDK for JavaScript - Sample Application</title>
   <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.133.0.min.js"></script>
   <script src="./scripts/CamanJS-4.1.1/dist/caman.full.pack.js"></script>
   <script src="./scripts/CamanJS-4.1.1/dist/caman.min.js"></script>
@@ -90,7 +91,7 @@
                     FULL_IMAGE(s3url + bucketName+"/"+'facebook-' + UserIdforaws + "/" + file.name);
                     listObjs();
                     Caman("#colorimg", function () {
-                        this.vintage();
+                        this.saturation(-100);
                         this.render();
                         console.log("render");
                     });
