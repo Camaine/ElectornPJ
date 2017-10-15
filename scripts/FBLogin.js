@@ -16,7 +16,6 @@ function FaceBookInit() {
         console.log(fbUserEmail + ' / ' + fbUserPhone);
         FB.api('/me?fields=id,name,email,permissions', function(response) {
             console.log('Good to see you, ' + response.name + '.');
-            console.log('Your mail is ' + response.email);
             console.log(JSON.stringify(response));
             DBupdate();
         });
