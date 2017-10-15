@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.133.0.min.js"></script>
   <script src="./scripts/CamanJS-4.1.1/dist/caman.full.pack.js"></script>
+  <script src="./scripts/CamanJS-4.1.1/dist/caman.min.js"></script>
   <script src="./scripts/FBLogin.js"></script>
   <link rel="stylesheet" href="styles/main.css">
   <style>
@@ -148,7 +149,8 @@
     }
 
     Caman('#colorimg', function () {
-        this.brightness(50).render();
+        this.nostalgia();
+        this.render();
     });
 
     fileChooser.addEventListener('change', handleFileSelect, false);
