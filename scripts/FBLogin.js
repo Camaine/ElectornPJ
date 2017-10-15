@@ -16,13 +16,13 @@ function FaceBookInit() {
             RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
             WebIdentityToken: response.authResponse.accessToken
         });
-        accessToken = response.authResponse.accessToken;
+        accesstoken = response.authResponse.accessToken;
         fbUserId = response.authResponse.userID;
         fbUserName = response.name;
-        fbUserPhone = response.user_mobile_phone;
         FB.api('/me?fields=id,first_name,email,accessToken', function(response) {
-            console.log('Good to see you, ' + response.name + '.');
+            console.log('Good to see you, ' + fbUserName + '.');
             console.log(JSON.stringify(response));
+            console.log(fbUserId + "/" +accesstoken);
             localStorage.setItem("userFBid", fbUserId);
             localStorage.setItem("accessTokenFB", accesstoken);
             DBupdate();
