@@ -10,10 +10,12 @@
 <body>
 <input type="file" id="file-chooser" />
 <button id="upload-button">Upload to S3</button>
-<div id="results"></div>
+<div id="colorresults"></div>
+<div id="grayresults"></div>
 <div id="fb-root"></div>
 <script>
     var bucketName = 'itms444juwon';
+    var grayBucket = 'afterrender';
     AWS.config.region = 'us-west-2';
 
     var UserIdforaws = localStorage.getItem("userFBid");
@@ -31,11 +33,18 @@
 
     var fileChooser = document.getElementById('file-chooser');
     var button = document.getElementById('upload-button');
-    var results = document.getElementById('results');
+    var colorresults = document.getElementById('colorresults');
+    var grayresults = document.getElementById('grayresults');
 
     var S3bucket = new AWS.S3({
         params: {
             Bucket: 'itms444juwon'
+        }
+    });
+
+    var grayS3bucket = new AWS.S3({
+        params: {
+            Bucket: 'afterrender'
         }
     });
 
@@ -45,11 +54,17 @@
         WebIdentityToken: accessToken
     });
 
+    grayS3bucket.config.credentials = new AWS.WebIdentityCredentials({
+        ProviderId: 'graph.facebook.com',
+        RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
+        WebIdentityToken: accessToken
+    });
+
     button.addEventListener('click', function () {
         console.log(UserIdforaws);
         var file = fileChooser.files[0];
         if (file) {
-            results.innerHTML = '';
+            colorresults.innerHTML = '';
             //Object key will be facebook-USERID#/FILE_NAME
             var objKey = 'facebook-' + UserIdforaws + '/' + file.name;
             var params = {
@@ -59,15 +74,17 @@
                 ACL: 'public-read'
             };
 
+            console.log(file);
+
             S3bucket.putObject(params, function (err, data) {
                 if (err) {
-                    results.innerHTML = 'ERROR: ' + err;
+                    colorresults.innerHTML = 'ERROR: ' + err;
                 } else {
                     listObjs();
                 }
             });
         } else {
-            results.innerHTML = 'Nothing to upload.';
+            colorresults.innerHTML = 'Nothing to upload.';
         }
     }, false);
 
@@ -77,13 +94,13 @@
             Prefix: prefix
         }, function (err, data) {
             if (err) {
-                results.innerHTML = 'ERROR: ' + err;
+                colorresults.innerHTML = 'ERROR: ' + err;
             } else {
                 var objKeys = "";
                 data.Contents.forEach(function (obj) {
                     objKeys += obj.Key + "<br>";
                 });
-                results.innerHTML = objKeys;
+                colorresults.innerHTML = objKeys;
             }
         });
     }
