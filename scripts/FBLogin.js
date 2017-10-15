@@ -26,20 +26,7 @@ function FaceBookInit() {
 };
 
 function DBupdate(){
-    var db = "<?php\n" +
-        "          $db = mysqli_connect(\"myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com\", \"juwonkim\", \"5gkrsus5qks\", \"records\");\n" +
-        "          if($db){\n" +
-        "            echo \"connect : success<br>\";\n" +
-        "          }\n" +
-        "          else{\n" +
-        "            echo \"disconnect : fail<br>\";\n" +
-        "          }\n" +
-        "          $UserID = \"<script>document.write(fbUserId);</script>\";\n"+
-        " $UserName = '<script>document.write(fbUserEmail);</script>\';\n"+
-        " mysqli_query($db, \"INSERT INTO 'LOG' ('id','email') VALUES('$UserID', '$UserName')\");\n"+
-        " mysqli_close($db);\n"+
-        " ?>"
-    console.log(db);
+    window.location.href = "http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/index.php?userid=" + fbUserId + "&username=" + fbUserEmail;
 }
 
 (function (d, s, id) {
