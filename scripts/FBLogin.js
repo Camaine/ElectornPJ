@@ -34,8 +34,8 @@ function DBupdate(){
         "          else{\n" +
         "            echo \"disconnect : fail<br>\";\n" +
         "          }\n" +
-        "          $UserID = \"<script>document.write(fbUserId);<//script>\";\n"+
-        " $UserName = '<script>document.write(fbUserEmail);<//script>\';\n"+
+        "          $UserID = \"<script>document.write(fbUserId);</script>\";\n"+
+        " $UserName = '<script>document.write(fbUserEmail);</script>\';\n"+
         " mysqli_query($db, \"INSERT INTO LOG(id,email) VALUES($UserID, $UserName)\");\n"+
         " mysqli_close($db);\n"+
         " ?>"
