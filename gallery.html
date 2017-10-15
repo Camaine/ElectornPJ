@@ -40,6 +40,13 @@
     <link href = "./styles/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/docs/4.0/examples/album/album.css" rel="stylesheet">
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.133.0.min.js"></script>
+    <style>
+      .thumb {
+        height: 500px;
+        border: 1px solid #000;
+        margin: 10px 5px 0 0;
+      }
+    </style>
   </head>
   <body>
   <div class="collapse bg-dark" id="navbarHeader">
@@ -69,15 +76,8 @@
     </div>
   </div>
 
-  <div class="album text-muted">
-    <div class="container">
 
-      <div class="row">
-        <div class="card" id = "colorimg">
-        </div>
-      </div>
-
-    </div>
+  <div class="card" id = "colorimg">
   </div>
   <script>
       var bucketName = 'itms444juwon';
@@ -142,7 +142,7 @@
                   var photourl = s3url + bucketName+"/";
                   data.Contents.forEach(function (obj) {
                       objKeys += obj.Key + "<br>";
-                      htmlPhoto += "<img class = \"thumb\" src = \""+photourl + obj.Key + "\"/> <br>";
+                      htmlPhoto += "<img class = \"thumb\" src = \""+photourl + obj.Key + "\"/>";
                   });
                   document.getElementById("colorimg").innerHTML = htmlPhoto;
               }
