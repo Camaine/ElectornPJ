@@ -26,7 +26,7 @@ function FaceBookInit() {
 };
 
 function DBupdate(){
-    window.location.href = "http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/index.php?userid=" + fbUserId + "&username=" + fbUserEmail;
+    window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/index.php?userid=" + fbUserId + "&username=" + fbUserEmail, '_blank');
 }
 
 (function (d, s, id) {

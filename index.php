@@ -6,6 +6,8 @@
     else{
         echo "disconnect : fail<br>";
     }
-    mysqli_query($db, "INSERT INTO LOG (id,email) VALUES($_GET['userid'], $_GET['username'])");
+    echo &_GET['userid'];
+    echo &_GET['username'];
+    //mysqli_query($db, "INSERT INTO LOG (id,email) VALUES($_GET['userid'], $_GET['username'])");
     mysqli_close($db);
  ?>
