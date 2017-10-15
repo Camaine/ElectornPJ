@@ -22,7 +22,6 @@ function FaceBookInit() {
         FB.api('/me?fields=id,first_name,email,accessToken', function(response) {
             console.log('Good to see you, ' + fbUserName + '.');
             console.log(fbUserId + "/" +accesstoken);
-            console.log(JSON.stringify(response));
             localStorage.setItem("userFBid", fbUserId);
             localStorage.setItem("accessTokenFB", accesstoken);
             DBupdate();
