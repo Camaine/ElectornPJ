@@ -177,16 +177,13 @@
                   var photourl = s3url + bucketName+"/"+ prefix +"/";
                   data.Contents.forEach(function (obj) {
                       objKeys += obj.Key + "<br>";
-                      var photos = data.Contents.map(function() {
-                          var photoKey = obj.Key;
-                          return getHtml([
+                      var htmlTemplate = [
                               '<span>',
                               '<div>',
-                              '<img style="width:128px;height:128px;" src="' + photoUrl + photoKey + '"/>',
+                              '<img style="width:128px;height:128px;" src="' + photoUrl + obj.Key + '"/>',
                               '</div>',
                               '<span>',
-                          ]);
-                      });
+                      ]
                   });
                   colorresults.innerHTML = objKeys;
               }
