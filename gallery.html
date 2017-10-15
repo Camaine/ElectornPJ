@@ -39,6 +39,7 @@
     <!-- Bootstrap Plugin -->
     <link href = "./styles/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/docs/4.0/examples/album/album.css" rel="stylesheet">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.133.0.min.js"></script>
   </head>
   <body>
   <div class="collapse bg-dark" id="navbarHeader">
@@ -114,6 +115,84 @@
 
     </div>
   </div>
+  <script>
+      var bucketName = 'itms444juwon';
+      var grayBucket = 'afterrender';
+      AWS.config.region = 'us-west-2';
+      var s3url = 'https://s3-us-west-2.amazonaws.com/';
+
+      var UserIdforaws = localStorage.getItem("userFBid");
+      var accessToken = localStorage.getItem("accessTokenFB");
+      //var UserIdforaws = 1618457058186092;
+
+      AWS.config.update({
+          accessKeyId: 'AKIAIOEQBRCNB57I2AXA',
+          secretAccessKey: 'iVgVVdeHKtRCcBs8uUafD/xvTe0rwa9o9vk0iV',
+          region: 'us-west-2',
+          credentials: new AWS.CognitoIdentityCredentials({
+              IdentityPoolId: 'us-east-2_MDn4cVooH'
+          })
+      });
+
+      var fileChooser = document.getElementById('file-chooser');
+      var button = document.getElementById('upload-button');
+      var colorresults = document.getElementById('colorresults');
+      var grayresults = document.getElementById('grayresults');
+
+      var S3bucket = new AWS.S3({
+          params: {
+              Bucket: 'itms444juwon'
+          }
+      });
+
+      var grayS3bucket = new AWS.S3({
+          params: {
+              Bucket: 'afterrender'
+          }
+      });
+
+      S3bucket.config.credentials = new AWS.WebIdentityCredentials({
+          ProviderId: 'graph.facebook.com',
+          RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
+          WebIdentityToken: accessToken
+      });
+
+      grayS3bucket.config.credentials = new AWS.WebIdentityCredentials({
+          ProviderId: 'graph.facebook.com',
+          RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
+          WebIdentityToken: accessToken
+      });
+
+      listObjs();
+
+      function listObjs() {
+          var prefix = 'facebook-' + UserIdforaws;
+          S3bucket.listObjects({
+              Prefix: prefix
+          }, function (err, data) {
+              if (err) {
+                  colorresults.innerHTML = 'ERROR: ' + err;
+              } else {
+                  var objKeys = "";
+                  var photourl = s3url + bucketName+"/"+ prefix +"/";
+                  data.Contents.forEach(function (obj) {
+                      objKeys += obj.Key + "<br>";
+                      var photos = data.Contents.map(function() {
+                          var photoKey = obj.Key;
+                          return getHtml([
+                              '<span>',
+                              '<div>',
+                              '<img style="width:128px;height:128px;" src="' + photoUrl + photoKey + '"/>',
+                              '</div>',
+                              '<span>',
+                          ]);
+                      });
+                  });
+                  colorresults.innerHTML = objKeys;
+              }
+          });
+      }
+  </script>
     <!-- Add your site or app content here -->
 
     <!-- build:js scripts/main.min.js -->
