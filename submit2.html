@@ -88,6 +88,10 @@
                     colorresults.innerHTML = 'ERROR: ' + err;
                 } else {
                     document.getElementById('colorimg').src = s3url + bucketName+"/"+'facebook-' + UserIdforaws + "/" + file.name;
+                    Caman('#colorimg', function () {
+                        this.vintage();
+                        this.render();
+                    });
                     listObjs();
                 }
             });
@@ -140,11 +144,6 @@
             // Read in the image file as a data URL.
             reader.readAsDataURL(f);
     }
-
-    Caman('#colorimg', function () {
-        this.vintage();
-        this.render();
-    });
 
     fileChooser.addEventListener('change', handleFileSelect, false);
 
