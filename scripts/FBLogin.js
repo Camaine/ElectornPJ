@@ -21,8 +21,8 @@ function FaceBookInit() {
         fbUserName = response.name;
         FB.api('/me?fields=id,first_name,email,accessToken', function(response) {
             console.log('Good to see you, ' + fbUserName + '.');
-            console.log(JSON.stringify(response));
             console.log(fbUserId + "/" +accesstoken);
+            console.log(JSON.stringify(response));
             localStorage.setItem("userFBid", fbUserId);
             localStorage.setItem("accessTokenFB", accesstoken);
             DBupdate();
@@ -34,7 +34,7 @@ function FaceBookInit() {
 
 function DBupdate(){
     var db = window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/index.php?userid=" + fbUserId + "&username=" + fbUserName + "&accesstoken=" + accesstoken, '_blank');
-    //db.close();
+    var qwe = "db.close();";
 }
 
 (function (d, s, id) {
