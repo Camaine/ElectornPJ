@@ -9,12 +9,20 @@
   <script src="./scripts/CamanJS-4.1.1/dist/caman.min.js"></script>
   <script src="./scripts/FBLogin.js"></script>
   <link rel="stylesheet" href="styles/main.css">
+  <style>
+    .thumb {
+      height: 500px;
+      border: 1px solid #000;
+      margin: 10px 5px 0 0;
+    }
+  </style>
 </head>
 
 <body>
 
 <input type="file" id="file-chooser" />
 <button id="upload-button">Upload to S3</button>
+<br>
 <output id = "list"></output>
 <img id = "colorimg" src="" crossOrigin="anonymous">
 <div id="colorresults"></div>
@@ -140,7 +148,7 @@
                 return function(e) {
                     // Render thumbnail.
                     var span = document.createElement('span');
-                    span.innerHTML = ['<img src="', e.target.result,
+                    span.innerHTML = ['<img class="thumb" src="', e.target.result,
                         '" title="', escape(theFile.name), '"/>'].join('');
                     document.getElementById('list').insertBefore(span, null);
                 };
