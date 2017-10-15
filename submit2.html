@@ -12,6 +12,7 @@
 <input type="file" id="file-chooser" />
 <button id="upload-button">Upload to S3</button>
 <output id = "list"></output>
+<img id = "colorimg" src="">
 <div id="colorresults"></div>
 <div id="grayresults"></div>
 <div id="fb-root"></div>
@@ -102,7 +103,8 @@
                 data.Contents.forEach(function (obj) {
                     objKeys += obj.Key + "<br>";
                 });
-                colorresults.innerHTML = objKeys;
+                colorresults.innerHTML = "https://s3-us-west-2.amazonaws.com/" + bucketName+"/"+objKeys;
+                document.getElementsById('colorimg').src = "https://s3-us-west-2.amazonaws.com/" + bucketName+"/"+objKeys;
             }
         });
     }
