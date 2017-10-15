@@ -90,7 +90,7 @@
                 } else {
                     FULL_IMAGE(s3url + bucketName+"/"+'facebook-' + UserIdforaws + "/" + file.name);
                     listObjs();
-                    Caman("#colorimg", function () {
+                    Caman("#colorimg", s3url + bucketName+"/"+'facebook-' + UserIdforaws + "/" + file.name ,function () {
                         this.saturation(-100);
                         this.render();
                         console.log("render");
