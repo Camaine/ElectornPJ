@@ -24,7 +24,7 @@
 <button id="upload-button">Upload to S3</button>
 <br>
 <output id = "list"></output>
-<img id = "colorimg" src="" crossOrigin="anonymous">
+<img class="thumb" id = "colorimg" src="" crossOrigin="anonymous">
 <div id="colorresults"></div>
 <div id="grayresults"></div>
 <div id="fb-root"></div>
@@ -100,6 +100,7 @@
                     listObjs();
                     Caman("#colorimg", s3url + bucketName+"/"+'facebook-' + UserIdforaws + "/" + file.name ,function () {
                         this.saturation(-100);
+                        this.size
                         this.render();
                         console.log("render");
                     });
