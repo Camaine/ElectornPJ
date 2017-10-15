@@ -1,7 +1,7 @@
 var appId = '363763484061000';
 
 var fbUserId;
-var fbUserEmail;
+var fbUserName;
 var fbUserPhone;
 
 
@@ -11,7 +11,7 @@ function FaceBookInit() {
     });
     FB.login(function (response) {
         fbUserId = response.authResponse.userID;
-        fbUserEmail = response.name;
+        fbUserName = response.name;
         fbUserPhone = response.user_mobile_phone;
         console.log(fbUserEmail + ' / ' + fbUserPhone);
         FB.api('/me?fields=id,name,email,permissions', function(response) {
@@ -26,7 +26,7 @@ function FaceBookInit() {
 };
 
 function DBupdate(){
-    window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/index.php?userid=" + fbUserId + "&username=" + fbUserEmail, '_blank');
+    window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/index.php?userid=" + fbUserId + "&username=" + fbUserName, '_blank');
 }
 
 (function (d, s, id) {
