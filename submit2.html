@@ -22,6 +22,7 @@
 
 <input type="file" id="file-chooser" />
 <button id="upload-button">Upload to S3</button>
+<button id="getRender">Get Render</button>
 <br>
 <output id = "list"></output>
 <img class="thumb" id = "colorimg" src="" crossOrigin="anonymous">
@@ -51,6 +52,7 @@
     var button = document.getElementById('upload-button');
     var colorresults = document.getElementById('colorresults');
     var grayresults = document.getElementById('grayresults');
+    var getRender = document.getElementById('getRender');
 
     var S3bucket = new AWS.S3({
         params: {
@@ -74,6 +76,10 @@
         ProviderId: 'graph.facebook.com',
         RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
         WebIdentityToken: accessToken
+    });
+
+    getRender.addEventListener('click',function(){
+        getRendered();
     });
 
     button.addEventListener('click', function () {
@@ -110,10 +116,7 @@
             colorresults.innerHTML = 'Nothing to upload.';
         }
         console.log("test2");
-        var rendered = document.getElementById("colorimg");
-        var flatimage = rendered.getContext("2d");
-        var dataURL = flatimage[0].toDataURL("image/png");
-        console.log(dataURL.toString());
+
     }, false);
 
     function listObjs() {
@@ -131,6 +134,13 @@
                 colorresults.innerHTML = objKeys;
             }
         });
+    }
+
+    function getRendered(){
+        var rendered = document.getElementById("colorimg");
+        var flatimage = rendered.getContext("2d");
+        var dataURL = flatimage[0].toDataURL("image/png");
+        console.log(dataURL.toString());
     }
 
 
