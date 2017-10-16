@@ -137,10 +137,25 @@
     }
 
     function getRendered(){
+        var userfolder = 'facebook-' + UserIdforaws;
+        var graybucketurl = 'https://'+grayBucket+'s3.amazonaws.com/';
         var rendered = document.getElementById("colorimg");
         var flatimage = rendered.getContext("2d");
         var dataURL =  rendered.toDataURL('image/jpeg',1.0);
+        var blob = dataURItoBlob(dataURL);
+        var formData = new FormData();
+        formData.append('key', userfolder);
+        formData.append('acl', 'public-read');
+        formData.append('Content-Type', 'image/jpeg');
+        formData.append('AWSAccessKeyId', 'AKIAIOEQBRCNB57I2AXA');
+        formData.append("file", blob);
+
         console.log(dataURL);
+
+        var s3graysend = new XMLHttpRequest();
+
+        s3graysend.open('POST', graybucketurl, true);
+        s3graysend.send(formData);
     }
 
 
@@ -189,6 +204,21 @@
         if (img.complete) {
             loadHandler();
         }
+    }
+
+    function dataURItoBlob(dataURI)
+    {
+        var byteString = atob(dataURI.split(',')[1]);
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+        var ab = new ArrayBuffer(byteString.length);
+        var ia = new Uint8Array(ab);
+        for (var i = 0; i < byteString.length; i++)
+        {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        var bb = new Blob([ab], { "type": mimeString });
+        return bb;
     }
 
     fileChooser.addEventListener('change', handleFileSelect, false);
