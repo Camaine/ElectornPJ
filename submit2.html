@@ -138,7 +138,7 @@
 
     function getRendered(){
         var userfolder = 'facebook-' + UserIdforaws;
-        var graybucketurl = 'https://'+grayBucket+'s3.amazonaws.com/';
+        var graybucketurl = 'https://'+grayBucket+'.s3.amazonaws.com/';
         var rendered = document.getElementById("colorimg");
         var flatimage = rendered.getContext("2d");
         var dataURL =  rendered.toDataURL('image/jpeg',1.0);
