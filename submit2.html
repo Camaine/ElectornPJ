@@ -109,6 +109,9 @@
         } else {
             colorresults.innerHTML = 'Nothing to upload.';
         }
+        var rendered = document.getElementById("colorimg");
+        var dataURL = rendered.toDataURL();
+        console.log(dataURL.toString());
     }, false);
 
     function listObjs() {
