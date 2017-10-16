@@ -143,19 +143,33 @@
         var flatimage = rendered.getContext("2d");
         var dataURL =  rendered.toDataURL('image/jpeg',1.0);
         var blob = dataURItoBlob(dataURL);
-        var formData = new FormData();
-        formData.append('key', userfolder);
-        formData.append('acl', 'public-read');
-        formData.append('Content-Type', 'image/jpeg');
-        formData.append('AWSAccessKeyId', 'AKIAIOEQBRCNB57I2AXA');
-        formData.append("file", blob);
 
         console.log(blob.type);
 
-        var s3graysend = new XMLHttpRequest();
+        if (blob) {
+            grayresults.innerHTML = '';
+            //Object key will be facebook-USERID#/FILE_NAME
+            var objKey = 'facebook-' + UserIdforaws + '/' + blob.name;
+            var params = {
+                Key: objKey,
+                ContentType: blob.type,
+                Body: blob,
+                ACL: 'public-read'
+            };
 
-        s3graysend.open('POST', graybucketurl, true);
-        s3graysend.send(formData);
+            console.log(blob);
+
+            S3bucket.putObject(params, function (err, data) {
+                if (err) {
+                    colorresults.innerHTML = 'ERROR: ' + err;
+                } else {
+                    listObjs();
+                }
+            });
+        } else {
+            grayresults.innerHTML = 'Nothing to upload.';
+        }
+
     }
 
 
