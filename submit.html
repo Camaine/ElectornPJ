@@ -97,6 +97,8 @@
       var albumBucketName = 'itms444juwon';
     var bucketRegion = 'us-west-2';
     var IdentityPoolId = 'us-east-2_MDn4cVooH';
+    var fileChooser = document.getElementById("photoupload");
+    var file = fileChooser.files[0];
 
     console.log('region : '+bucketRegion);
     console.log('AWS config');
@@ -113,11 +115,8 @@
 
     console.log('new S3 variable');
     var s3 = new AWS.S3({
-        apiVersion: '2006-03-01',
         params: {
             Bucket: albumBucketName,
-            Key : 'Sample',
-            ACL : 'public-read'
         }
     });
     console.log('s3 accessid : ' + s3.apiVersion);
@@ -244,26 +243,28 @@
         });
     }
 
-    function addPhoto(albumName) {
+    function addPhoto() {
         var files = document.getElementById('photoupload').files;
         if (!files.length) {
             return alert('Please choose a file to upload first.');
         }
         var file = files[0];
         var fileName = file.name;
-        var albumPhotosKey = encodeURIComponent(albumName) + '//';
 
-        var photoKey = albumPhotosKey + fileName;
-        s3.upload({
-            Key: photoKey,
-            Body: file,
-            ACL: 'public-read'
-        }, function(err, data) {
+        var photoKey = 'private-1' + '/' +fileName;
+        var params = {
+                Key: photoKey,
+                Body: file,
+                ContentType: file.type,
+                ACL: 'public-read'
+            };
+        console.log(file);
+        s3.putObject(params, function (err, data) {
             if (err) {
-                return alert('There was an error uploading your photo: ' + err.message);
+                console.log('ERROR: ' + err);
+            } else {
+                console.log("render");
             }
-            alert('Successfully uploaded photo.');
-            viewAlbum(albumName);
         });
     }
 
