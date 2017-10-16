@@ -49,6 +49,11 @@
         })
     });
 
+    AWS.config.credentials.get(function(err) {
+        if (err) alert(err);
+        console.log(AWS.config.credentials);
+    });
+
     var fileChooser = document.getElementById('file-chooser');
     var button = document.getElementById('upload-button');
     var colorresults = document.getElementById('colorresults');
