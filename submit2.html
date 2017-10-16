@@ -140,7 +140,7 @@
         var rendered = document.getElementById("colorimg");
         var flatimage = rendered.getContext("2d");
         var toImage = new Image();
-        image.src =  flatimage.toDataURL("image/png");
+        image.src =  rendered.toDataURL('image/jpeg',1.0);
         console.log("test3");
         return toImage;
     }
