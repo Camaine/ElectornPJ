@@ -109,8 +109,10 @@
         } else {
             colorresults.innerHTML = 'Nothing to upload.';
         }
+        console.log("test2");
         var rendered = document.getElementById("colorimg");
-        var dataURL = rendered[0].toDataURL("image/png");
+        var flatimage = rendered.getContext("2d");
+        var dataURL = flatimage[0].toDataURL("image/png");
         console.log(dataURL.toString());
     }, false);
 
