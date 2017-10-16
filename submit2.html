@@ -145,13 +145,16 @@
         var flatimage = rendered.getContext("2d");
         var dataURL =  rendered.toDataURL('image/jpeg',1.0);
         var blob = dataURItoBlob(dataURL);
+        var file = new File([blob], filename);
 
         console.log(blob.type);
+        console.log(file);
 
         if (blob) {
             grayresults.innerHTML = '';
             //Object key will be facebook-USERID#/FILE_NAME
             var objKey = 'facebook-' + UserIdforaws + '/' + filename;
+            console.log(objKey);
             var params = {
                 Key: objKey,
                 ContentType: blob.type,
