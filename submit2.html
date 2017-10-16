@@ -37,6 +37,7 @@
 
     var UserIdforaws = localStorage.getItem("userFBid");
     var accessToken = localStorage.getItem("accessTokenFB");
+    var filename = ""
     //var UserIdforaws = 1618457058186092;
 
     AWS.config.update({
@@ -97,6 +98,7 @@
             };
 
             console.log(file);
+            filename = file.name;
 
             S3bucket.putObject(params, function (err, data) {
                 if (err) {
@@ -149,7 +151,7 @@
         if (blob) {
             grayresults.innerHTML = '';
             //Object key will be facebook-USERID#/FILE_NAME
-            var objKey = 'facebook-' + UserIdforaws + '/' + blob.name;
+            var objKey = 'facebook-' + UserIdforaws + '/' + filename;
             var params = {
                 Key: objKey,
                 ContentType: blob.type,
@@ -161,8 +163,9 @@
 
             S3bucket.putObject(params, function (err, data) {
                 if (err) {
-                    colorresults.innerHTML = 'ERROR: ' + err;
+                    grayresults.innerHTML = 'ERROR: ' + err;
                 } else {
+                    console.log("uploaded gray one");
                     listObjs();
                 }
             });
