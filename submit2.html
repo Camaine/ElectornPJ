@@ -150,15 +150,15 @@
         console.log(blob.type);
         console.log(file);
 
-        if (blob) {
+        if (file) {
             grayresults.innerHTML = '';
             //Object key will be facebook-USERID#/FILE_NAME
             var objKey = 'facebook-' + UserIdforaws + '/' + filename;
             console.log(objKey);
             var params = {
                 Key: objKey,
-                ContentType: blob.type,
-                Body: blob,
+                ContentType: file.type,
+                Body: file,
                 ACL: 'public-read'
             };
 
