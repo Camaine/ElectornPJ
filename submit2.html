@@ -164,7 +164,7 @@
 
             console.log(blob);
 
-            S3bucket.putObject(params, function (err, data) {
+            grayS3bucket.putObject(params, function (err, data) {
                 if (err) {
                     grayresults.innerHTML = 'ERROR: ' + err;
                 } else {
