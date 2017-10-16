@@ -139,8 +139,10 @@
     function getRendered(){
         var rendered = document.getElementById("colorimg");
         var flatimage = rendered.getContext("2d");
-        var dataURL = flatimage[0].toDataURL("image/png");
-        console.log(dataURL.toString());
+        var toImage = new Image();
+        image.src =  flatimage.toDataURL("image/png");
+        console.log("test3");
+        return toImage;
     }
 
 
