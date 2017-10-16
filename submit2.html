@@ -104,6 +104,7 @@
                 if (err) {
                     colorresults.innerHTML = 'ERROR: ' + err;
                 } else {
+                    console.log(data);
                     FULL_IMAGE(s3url + bucketName+"/"+'facebook-' + UserIdforaws + "/" + file.name);
                     listObjs();
                     Caman("#colorimg", s3url + bucketName+"/"+'facebook-' + UserIdforaws + "/" + file.name ,function () {
