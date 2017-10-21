@@ -78,35 +78,7 @@
     </div>
 </section>
 
-<section class="jumbotron text-center">
-    <div class="container">
-        <p class="lead text-muted">Register your info</p>
-        <p>
-            <a>Your Email</a>
-            <input type="text" id="myemail"><br>
-        </p>
-        <p>
-            <a>Your Phone</a>
-            <input type="text" id="myphone"><br>
-        </p>
-        <p>
-            <a href="submit2.html" class="btn btn-primary">Login</a>
-        </p>
-    </div>
-</section>
-
 <!-- Add your site or app content here -->
-<script>
-    bucket = new AWS.S3({
-        params: {
-            Bucket: 'itms444juwon'
-        }
-    });
-    var Loginbtn = document.getElementById('LoginBtn');
-    Loginbtn.addEventListener('click', function () {
-        FaceBookInit();
-    }, false);
-</script>
 
 <!-- build:js scripts/main.min.js -->
 <script src="scripts/main.js"></script>
