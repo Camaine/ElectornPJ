@@ -159,12 +159,20 @@
               } else {
                   var objKeys = "";
                   var photourl = s3url + bucketName+"/";
+                  var htmlPhoto = "";
+                  var keys = [];
+                  var ketcnt = 0;
                   data.Contents.forEach(function (obj) {
                       objKeys += obj.Key + "<br>";
                       console.log(obj.Key);
-                      document.getElementById("grayimg").innerHTML = "<img class=\"thumb\" id = \""+ obj.Key + "\" src=\"\" crossOrigin=\"anonymous\">"
-                      FULL_IMAGE(photourl + obj.Key, obj.Key);
+                      htmlPhoto += "<img class=\"thumb\" id = \""+ obj.Key + "\" src=\"\" crossOrigin=\"anonymous\">";
+                      keys[keycnt] = obj.Key;
+                      keycnt += 1;
                   });
+                  document.getElementById("grayimg").innerHTML = "<img class=\"thumb\" id = \""+ obj.Key + "\" src=\"\" crossOrigin=\"anonymous\">"
+                  for(var i in keys){
+                      FULL_IMAGE(photourl + keys[i], keys[i]);
+                  }
               }
           });
       }
