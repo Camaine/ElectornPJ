@@ -162,8 +162,9 @@
                   var photourl = s3url + bucketName+"/";
                   data.Contents.forEach(function (obj) {
                       objKeys += obj.Key + "<br>";
+                      console.log(obj.Key);
                       FULL_IMAGE(photourl + obj.Key);
-                      //htmlPhoto += "<canvas class = \"thumb\" src = \""+photourl + obj.Key + "\"/>";
+                      htmlPhoto += "<canvas class = \"thumb\" src = \""+photourl + obj.Key + "\"/>";
                   });
                   document.getElementById("grayimg").innerHTML = htmlPhoto;
               }
