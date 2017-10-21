@@ -78,10 +78,10 @@
 
   <section class="jumbotron text-center">
     <div class="container">
-      <h1 class="jumbotron-heading">Color Image Check</h1>
       <p>
         <a href="submit.html" class="btn btn-primary">Submit Page</a>
       </p>
+      <h1 class="jumbotron-heading">Color Image Check</h1>
     </div>
     <div id = "colorimg"></div>
   </section>
@@ -161,7 +161,7 @@
                   var photourl = s3url + graybucketName+"/";
                   data.Contents.forEach(function (obj) {
                       objKeys += obj.Key + "<br>";
-                      htmlPhoto += "<img class = \"thumb\" src = \""+photourl + obj.Key + "\"/>";
+                      htmlPhoto += "<canvas class = \"thumb\" src = \""+photourl + obj.Key + "\"/>";
                   });
                   document.getElementById("grayimg").innerHTML = htmlPhoto;
               }
