@@ -109,9 +109,14 @@
 
   <script type="text/javascript">
       var albumBucketName = 'itms444juwon';
+      var grayBucketName = 'afterrender';
       var bucketRegion = 'us-west-2';
       var IdentityPoolId = 'us-west-2:b79ec16a-b3da-4bf5-adcc-4c45db016e42';
       var s3url = 'https://s3-us-west-2.amazonaws.com/';
+      var s3raw = '';
+      var s3end = '';
+      var stat = '0';
+      var receipt = '';
       var myid = localStorage.getItem("myid");
       var fileChooser = document.getElementById("photoupload");
       var button = document.getElementById('upload-button');
@@ -137,7 +142,7 @@
       var grays3 = new AWS.S3({
           apiVersion: '2006-03-01',
           params: {
-              Bucket: 'afterrender'
+              Bucket: grayBucketName
           }
       });
 
@@ -165,6 +170,7 @@
                       colorresults.innerHTML = 'ERROR: ' + err;
                   } else {
                       console.log(data);
+                      s3raw = s3url + albumBucketName+"/"+'myphoto-' + myid.toString();
                       FULL_IMAGE(s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + file.name);
                       Caman("#colorimg", s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + file.name ,function () {
                           this.saturation(-100);
@@ -172,6 +178,7 @@
                           this.render();
                           console.log("render");
                       });
+                      getRendered();
                   }
               });
           } else {
@@ -199,12 +206,17 @@
               };
 
               console.log(blob);
-
+              s3end = s3url + grayBucketName+"/"+'myphoto-' + myid.toString();
+              receipt = 'myphoto-' + myid.toString();
               grays3.putObject(params, function (err, data) {
                   if (err) {
                       console.log('ERROR: ' + err);
+                      stat = '0';
+                      var db = window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&s3end=" + myid.toString(), '_blank');
                   } else {
                       console.log("uploaded gray one");
+                      stat = '1';
+                      var db = window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&s3end=" + myid.toString(), '_blank');
                   }
               });
           } else {
