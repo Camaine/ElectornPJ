@@ -79,7 +79,7 @@
         <input type="text" id="myphone"><br>
       </p>
       <p>
-        <a href="submit2.html" class="btn btn-primary" id="LoginBtn"}>Login</a>
+        <a href="menu.html" class="btn btn-primary" id="LoginBtn"}>Login</a>
       </p>
     </div>
   </section>
@@ -92,8 +92,8 @@
           }
       });
       var Loginbtn = document.getElementById('LoginBtn');
-      var email = document.getElementById('myemail');
-      var phone = document.getElementById('myphone');
+      var email = document.getElementById('myemail').value;
+      var phone = document.getElementById('myphone').value;
       Loginbtn.addEventListener('click', function () {
           var db = window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/login.php?myemail=" + email.toString() + "&myphone=" + phone.toString(), '_blank');
           localStorage.setItem("myid",db);
