@@ -91,6 +91,7 @@
       <h1 class="jumbotron-heading">Gray Image Check</h1>
     </div>
     <div id = "grayimg"></div>
+    <img class="thumb" id = "grayimgpr" src="" crossOrigin="anonymous">
   </section>
 
 
@@ -163,26 +164,30 @@
                   data.Contents.forEach(function (obj) {
                       objKeys += obj.Key + "<br>";
                       console.log(obj.Key);
-                      Showgrayblob(photourl + obj.Key);
-                      //htmlPhoto += "<canvas class = \"thumb\" src = \""+photourl + obj.Key + "\"/>";
+                      FULL_IMAGE(photourl + obj.Key);
+                      htmlPhoto += "<canvas class = \"thumb\" src = \""+photourl + obj.Key + "\"/>";
                   });
                   document.getElementById("grayimg").innerHTML = htmlPhoto;
               }
           });
       }
 
-      function Showgrayblob(imgurl){
-          var xhr = new XMLHttpRequest();
-          xhr.open("GET", imgurl);
-          xhr.responseType = "blob";
-          xhr.onload = response;
-          xhr.send();
-      }
-
-      function response(e) {
-          var urlCreator = window.URL || window.webkitURL;
-          var imageUrl = urlCreator.createObjectURL(this.response);
-          document.querySelector("#grayimg").src = imageUrl;
+      function FULL_IMAGE(fimage) {
+          var loaded = false;
+          function loadHandler() {
+              if (loaded) {
+                  return;
+              }
+              loaded = true;
+              /* your code */
+          }
+          var img = document.getElementById('grayimgpr');
+          img.onload = loadHandler;
+          img.crossOrigin = '';
+          img.src = fimage;
+          if (img.complete) {
+              loadHandler();
+          }
       }
 
   </script>
