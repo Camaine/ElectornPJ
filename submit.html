@@ -93,7 +93,7 @@
         <a href="#" class="btn btn-primary" id="upload-button">Submit your Photo</a>
       <p></p>
       <p>
-        <a href="#" class="btn btn-primary" id="gray-button">Submit Grayscale</a>
+        <a href="gallery.html" class="btn btn-primary">Check Gallery</a>
       </p>
     </div>
   </section>
@@ -120,7 +120,6 @@
       var myid = localStorage.getItem("myid");
       var fileChooser = document.getElementById("photoupload");
       var button = document.getElementById('upload-button');
-      var getRender = document.getElementById('gray-button')
 
       console.log('region : '+bucketRegion);
       console.log('AWS config');
@@ -144,10 +143,6 @@
           params: {
               Bucket: grayBucketName
           }
-      });
-
-      getRender.addEventListener('click',function(){
-          getRendered();
       });
 
       button.addEventListener('click', function () {

@@ -76,13 +76,29 @@
     </div>
   </div>
 
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Color Image Check</h1>
+      <p>
+        <a href="submit.html" class="btn btn-primary">Submit Page</a>
+      </p>
+    </div>
+    <div id = "colorimg"></div>
+  </section>
 
-  <div id = "colorimg">
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Gray Image Check</h1>
+    </div>
+    <div id = "grayimg"></div>
+  </section>
+
+
   </div>
   <script>
       var bucketName = 'itms444juwon';
+      var graybucketName = 'afterrender';
       var bucketRegion = 'us-west-2';
-      var grayBucket = 'afterrender';
       var IdentityPoolId = 'us-west-2:b79ec16a-b3da-4bf5-adcc-4c45db016e42';
       var s3url = 'https://s3-us-west-2.amazonaws.com/';
 
@@ -103,25 +119,25 @@
 
       var S3bucket = new AWS.S3({
           params: {
-              Bucket: 'itms444juwon'
+              Bucket: bucketName
           }
       });
 
       var grayS3bucket = new AWS.S3({
           params: {
-              Bucket: 'afterrender'
+              Bucket: graybucketName
           }
       });
 
       listObjs();
 
       function listObjs() {
-          var prefix = 'myphoto-' + 'myidtoString';
+          var prefix = 'myphoto-' + myid;
           S3bucket.listObjects({
               Prefix: prefix
           }, function (err, data) {
               if (err) {
-                  colorresults.innerHTML = 'ERROR: ' + err;
+                  console.log('ERROR: ' + err);
               } else {
                   var objKeys = "";
                   var htmlPhoto = "";
@@ -131,6 +147,23 @@
                       htmlPhoto += "<img class = \"thumb\" src = \""+photourl + obj.Key + "\"/>";
                   });
                   document.getElementById("colorimg").innerHTML = htmlPhoto;
+              }
+          });
+
+          grayS3bucket.listObjects({
+              Prefix: prefix
+          }, function (err, data) {
+              if (err) {
+                  console.log('ERROR: ' + err);
+              } else {
+                  var objKeys = "";
+                  var htmlPhoto = "";
+                  var photourl = s3url + graybucketName+"/";
+                  data.Contents.forEach(function (obj) {
+                      objKeys += obj.Key + "<br>";
+                      htmlPhoto += "<img class = \"thumb\" src = \""+photourl + obj.Key + "\"/>";
+                  });
+                  document.getElementById("grayimg").innerHTML = htmlPhoto;
               }
           });
       }
