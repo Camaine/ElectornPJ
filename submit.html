@@ -94,6 +94,7 @@
       var albumBucketName = 'itms444juwon';
     var bucketRegion = 'us-west-2';
     var IdentityPoolId = 'us-east-2_MDn4cVooH';
+    var myid = localStorage.getItem("myid");
     var fileChooser = document.getElementById("photoupload");
     var button = document.getElementById('upload-button');
 
@@ -136,7 +137,7 @@
           var file = fileChooser.files[0];
           if (file) {
               //Object key will be facebook-USERID#/FILE_NAME
-              var objKey = 'Sample/' + file.name;
+              var objKey = 'myphoto-'+ myid.toString() + "/" + file.name;
               var params = {
                   Key: objKey,
                   ContentType: file.type,
