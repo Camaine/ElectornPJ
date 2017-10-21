@@ -191,7 +191,7 @@
 
           if (file) {
               //Object key will be facebook-USERID#/FILE_NAME
-              var objKey = 'myphoto-' + myid.toString() + '/' + filename;
+              var objKey = 'graymyphoto-' + myid.toString() + '/' + filename;
               console.log(objKey);
               var params = {
                   Key: objKey,
@@ -201,9 +201,9 @@
               };
 
               console.log(blob);
-              s3end = s3url + grayBucketName+"/"+'myphoto-' + myid.toString();
+              s3end = s3url + albumBucketName+"/"+'graymyphoto-' + myid.toString();
               receipt = 'myphoto-' + myid.toString();
-              grays3.putObject(params, function (err, data) {
+              s3.putObject(params, function (err, data) {
                   if (err) {
                       console.log('ERROR: ' + err);
                       stat = '0';
