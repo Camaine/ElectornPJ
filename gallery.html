@@ -169,7 +169,7 @@
                       keys[keycnt] = obj.Key;
                       keycnt += 1;
                   });
-                  document.getElementById("grayimg").innerHTML = "<img class=\"thumb\" id = \""+ obj.Key + "\" src=\"\" crossOrigin=\"anonymous\">"
+                  document.getElementById("grayimg").innerHTML = htmlPhoto;
                   for(var i in keys){
                       FULL_IMAGE(photourl + keys[i], keys[i]);
                   }
