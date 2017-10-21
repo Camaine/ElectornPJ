@@ -30,58 +30,35 @@
 <div id="grayresults"></div>
 <div id="fb-root"></div>
 <script>
-    var bucketName = 'itms444juwon';
-    var grayBucket = 'afterrender';
-    AWS.config.region = 'us-west-2';
-    var s3url = 'https://s3-us-west-2.amazonaws.com/';
+    var albumBucketName = 'itms444juwon';
+    var bucketRegion = 'us-west-2';
+    var IdentityPoolId = 'us-west-2:b79ec16a-b3da-4bf5-adcc-4c45db016e42';
+    var myid = localStorage.getItem("myid");
+    var fileChooser = document.getElementById("photoupload");
+    var button = document.getElementById('upload-button');
 
-    var UserIdforaws = localStorage.getItem("userFBid");
-    var accessToken = localStorage.getItem("accessTokenFB");
-    var filename = ""
-    //var UserIdforaws = 1618457058186092;
+    console.log('region : '+bucketRegion);
+    console.log('AWS config');
 
     AWS.config.update({
-        accessKeyId: 'AKIAIOEQBRCNB57I2AXA',
-        secretAccessKey: 'iVgVVdeHKtRCcBs8uUafD/xvTe0rwa9o9vk0iV',
-        region: 'us-west-2',
+        region: bucketRegion,
         credentials: new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: 'us-east-2_MDn4cVooH'
+            IdentityPoolId: IdentityPoolId
         })
     });
 
-    AWS.config.credentials.get(function(err) {
-        if (err) alert(err);
-        console.log(AWS.config.credentials);
-    });
-
-    var fileChooser = document.getElementById('file-chooser');
-    var button = document.getElementById('upload-button');
-    var colorresults = document.getElementById('colorresults');
-    var grayresults = document.getElementById('grayresults');
-    var getRender = document.getElementById('getRender');
-
-    var S3bucket = new AWS.S3({
+    var s3 = new AWS.S3({
+        apiVersion: '2006-03-01',
         params: {
-            Bucket: 'itms444juwon'
+            Bucket: albumBucketName,
         }
     });
 
-    var grayS3bucket = new AWS.S3({
+    var grays3 = new AWS.S3({
+        apiVersion: '2006-03-01',
         params: {
             Bucket: 'afterrender'
         }
-    });
-
-    S3bucket.config.credentials = new AWS.WebIdentityCredentials({
-        ProviderId: 'graph.facebook.com',
-        RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
-        WebIdentityToken: accessToken
-    });
-
-    grayS3bucket.config.credentials = new AWS.WebIdentityCredentials({
-        ProviderId: 'graph.facebook.com',
-        RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
-        WebIdentityToken: accessToken
     });
 
     getRender.addEventListener('click',function(){
@@ -89,13 +66,10 @@
     });
 
     button.addEventListener('click', function () {
-        console.log(UserIdforaws);
-        console.log(accessToken);
         var file = fileChooser.files[0];
         if (file) {
-            colorresults.innerHTML = '';
             //Object key will be facebook-USERID#/FILE_NAME
-            var objKey = 'facebook-' + UserIdforaws + '/' + file.name;
+            var objKey = 'myphoto-' + myid + '/' + file.name;
             var params = {
                 Key: objKey,
                 ContentType: file.type,
@@ -111,9 +85,8 @@
                     colorresults.innerHTML = 'ERROR: ' + err;
                 } else {
                     console.log(data);
-                    FULL_IMAGE(s3url + bucketName+"/"+'facebook-' + UserIdforaws + "/" + file.name);
-                    listObjs();
-                    Caman("#colorimg", s3url + bucketName+"/"+'facebook-' + UserIdforaws + "/" + file.name ,function () {
+                    FULL_IMAGE(s3url + bucketName+"/"+'myphoto-' + myid.toString() + "/" + file.name);
+                    Caman("#colorimg", s3url + bucketName+"/"+'myphoto-' + myid.toString() + "/" + file.name ,function () {
                         this.saturation(-100);
                         this.size
                         this.render();
@@ -122,45 +95,21 @@
                 }
             });
         } else {
-            colorresults.innerHTML = 'Nothing to upload.';
+            console.log('Nothing to upload.');
         }
         console.log("test2");
 
     }, false);
 
-    function listObjs() {
-        var prefix = 'facebook-' + UserIdforaws;
-        S3bucket.listObjects({
-            Prefix: prefix
-        }, function (err, data) {
-            if (err) {
-                colorresults.innerHTML = 'ERROR: ' + err;
-            } else {
-                var objKeys = "";
-                data.Contents.forEach(function (obj) {
-                    objKeys += obj.Key + "<br>";
-                });
-                colorresults.innerHTML = objKeys;
-            }
-        });
-    }
-
     function getRendered(){
-        var userfolder = 'facebook-' + UserIdforaws;
-        var graybucketurl = 'https://'+grayBucket+'.s3.amazonaws.com/';
         var rendered = document.getElementById("colorimg");
-        var flatimage = rendered.getContext("2d");
         var dataURL =  rendered.toDataURL('image/jpeg',1.0);
         var blob = dataURItoBlob(dataURL);
         var file = new File([blob], filename);
 
-        console.log(blob.type);
-        console.log(file);
-
         if (file) {
-            grayresults.innerHTML = '';
             //Object key will be facebook-USERID#/FILE_NAME
-            var objKey = 'facebook-' + UserIdforaws + '/' + filename;
+            var objKey = 'myphoto-' + myid.toString() + '/' + filename;
             console.log(objKey);
             var params = {
                 Key: objKey,
@@ -171,12 +120,11 @@
 
             console.log(blob);
 
-            grayS3bucket.putObject(params, function (err, data) {
+            grays3.putObject(params, function (err, data) {
                 if (err) {
-                    grayresults.innerHTML = 'ERROR: ' + err;
+                    console.log('ERROR: ' + err);
                 } else {
                     console.log("uploaded gray one");
-                    listObjs();
                 }
             });
         } else {

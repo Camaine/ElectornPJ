@@ -41,6 +41,13 @@
 
     <!-- AWS SDK for JavaScript -->
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.133.0.min.js"></script>
+    <style>
+      .thumb {
+        height: 500px;
+        border: 1px solid #000;
+        margin: 10px 5px 0 0;
+      }
+    </style>
 
   </head>
   <body>
@@ -74,70 +81,66 @@
   <section class="jumbotron text-center">
     <div class="container">
       <h1 class="jumbotron-heading">Photo Submit Page</h1>
+      <p></p>
+        <a href="#" class="btn btn-primary" id="upload-button">Submit your Photo</a>
+      <p></p>
       <p>
-        <a href="#" class="btn btn-primary">Submit your Photo</a>
+        <a href="#" class="btn btn-primary" id="gray-button">Submit Grayscale</a>
+      </p>
     </div>
   </section>
 
-  <!-- AWS SDK S3 -->
-
-
   <div id="app">
     <input type="file" id="photoupload" />
-    <button id="upload-button">Upload to S3</button>
     <div id="results"></div>
     <div id="fb-root"></div>
-    <h1>My Photo Albums App</h1>
   </div>
+
+  <img class="thumb" id = "colorimg" src="" crossOrigin="anonymous">
+  <output id = "list"></output>
+
   <script type="text/javascript">
-
       var albumBucketName = 'itms444juwon';
-    var bucketRegion = 'us-west-2';
-    var IdentityPoolId = 'us-east-2_MDn4cVooH';
-    var myid = localStorage.getItem("myid");
-    var fileChooser = document.getElementById("photoupload");
-    var button = document.getElementById('upload-button');
+      var bucketRegion = 'us-west-2';
+      var IdentityPoolId = 'us-west-2:b79ec16a-b3da-4bf5-adcc-4c45db016e42';
+      var myid = localStorage.getItem("myid");
+      var fileChooser = document.getElementById("photoupload");
+      var button = document.getElementById('upload-button');
+      var getRender = document.getElementById('gray-button')
 
-    console.log('region : '+bucketRegion);
-    console.log('AWS config');
+      console.log('region : '+bucketRegion);
+      console.log('AWS config');
 
-     AWS.config.update({
-            accessKeyId: 'AKIAIOEQBRCNB57I2AXA',
-            secretAccessKey: 'iVgVVdeHKtRCcBs8uUafD/xvTe0rwa9o9vk0iV',
-            region: bucketRegion,
-            credentials: new AWS.CognitoIdentityCredentials({
-                IdentityPoolId: IdentityPoolId
-            })
-     });
-     console.log('AccessKey ID : ' + AWS.apiVersion);
-
-      AWS.config.credentials.get(function(err) {
-          if (err) alert(err);
-          console.log(AWS.config.credentials);
+      AWS.config.update({
+          region: bucketRegion,
+          credentials: new AWS.CognitoIdentityCredentials({
+              IdentityPoolId: IdentityPoolId
+          })
       });
 
+      var s3 = new AWS.S3({
+          apiVersion: '2006-03-01',
+          params: {
+              Bucket: albumBucketName,
+          }
+      });
 
+      var grays3 = new AWS.S3({
+          apiVersion: '2006-03-01',
+          params: {
+              Bucket: 'afterrender'
+          }
+      });
 
-    console.log('new S3 variable');
-    var s3 = new AWS.S3({
-        params: {
-            Bucket: albumBucketName,
-        }
-    });
-    console.log('s3 accessid : ' + s3.apiVersion);
-    console.log('s3 bucket : ' + s3.Bucket);
-
-      s3.config.credentials = new AWS.WebIdentityCredentials({
-          ProviderId: 'graph.facebook.com',
-          RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
-          WebIdentityToken: 'EAAFK10kZC7UgBAMHQTI1Lf5GR1AZBFhbC5I6xWJPg18Uew3r6mDTmHmhHvdaIKBOxVsM40TBSAS4SR89RlkfX9S6yRTv6ZBof8dz5KGgy1P0gv42Cms9hMSL1oRz1EouHxsxI4jU4qf1ZA0SWpfV88iWOyESB0hZAWgbzYVQ9asTyYDnaOuccw8h9Eh36rAYo7c5wfLUCNQZDZD'
+      getRender.addEventListener('click',function(){
+          getRendered();
       });
 
       button.addEventListener('click', function () {
           var file = fileChooser.files[0];
           if (file) {
               //Object key will be facebook-USERID#/FILE_NAME
-              var objKey = 'myphoto-'+ myid.toString() + "/" + file.name;
+              var objKey = 'myphoto-' + myid + '/' + file.name;
               var params = {
                   Key: objKey,
                   ContentType: file.type,
@@ -149,11 +152,17 @@
               filename = file.name;
 
               s3.putObject(params, function (err, data) {
-                  console.log(data);
                   if (err) {
-                      console.log('ERROR: ' + err);
+                      colorresults.innerHTML = 'ERROR: ' + err;
                   } else {
-                      console.log('success');
+                      console.log(data);
+                      FULL_IMAGE(s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + file.name);
+                      Caman("#colorimg", s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + file.name ,function () {
+                          this.saturation(-100);
+                          this.size
+                          this.render();
+                          console.log("render");
+                      });
                   }
               });
           } else {
@@ -162,6 +171,103 @@
           console.log("test2");
 
       }, false);
+
+      function getRendered(){
+          var rendered = document.getElementById("colorimg");
+          var dataURL =  rendered.toDataURL('image/jpeg',1.0);
+          var blob = dataURItoBlob(dataURL);
+          var file = new File([blob], filename);
+
+          if (file) {
+              //Object key will be facebook-USERID#/FILE_NAME
+              var objKey = 'myphoto-' + myid.toString() + '/' + filename;
+              console.log(objKey);
+              var params = {
+                  Key: objKey,
+                  ContentType: file.type,
+                  Body: file,
+                  ACL: 'public-read'
+              };
+
+              console.log(blob);
+
+              grays3.putObject(params, function (err, data) {
+                  if (err) {
+                      console.log('ERROR: ' + err);
+                  } else {
+                      console.log("uploaded gray one");
+                  }
+              });
+          } else {
+              grayresults.innerHTML = 'Nothing to upload.';
+          }
+
+      }
+
+
+      function handleFileSelect(evt) {
+          var files = evt.target.files; // FileList object
+
+          // Loop through the FileList and render image files as thumbnails.
+          var f = fileChooser.files[0];
+
+          // Only process image files.
+          if (!f.type.match('image.*')) {
+          }
+
+          var reader = new FileReader();
+
+          // Closure to capture the file information.
+          reader.onload = (function(theFile) {
+              return function(e) {
+                  // Render thumbnail.
+                  var span = document.createElement('span');
+                  span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                      '" title="', escape(theFile.name), '"/>'].join('');
+                  document.getElementById('list').insertBefore(span, null);
+              };
+          })(f);
+
+          // Read in the image file as a data URL.
+          reader.readAsDataURL(f);
+
+
+      }
+
+      function FULL_IMAGE(fimage) {
+          var loaded = false;
+          function loadHandler() {
+              if (loaded) {
+                  return;
+              }
+              loaded = true;
+              /* your code */
+          }
+          var img = document.getElementById('colorimg');
+          img.onload = loadHandler;
+          img.crossOrigin = '';
+          img.src = fimage;
+          if (img.complete) {
+              loadHandler();
+          }
+      }
+
+      function dataURItoBlob(dataURI)
+      {
+          var byteString = atob(dataURI.split(',')[1]);
+          var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+          var ab = new ArrayBuffer(byteString.length);
+          var ia = new Uint8Array(ab);
+          for (var i = 0; i < byteString.length; i++)
+          {
+              ia[i] = byteString.charCodeAt(i);
+          }
+
+          var bb = new Blob([ab], { "type": mimeString });
+          return bb;
+      }
+
+      fileChooser.addEventListener('change', handleFileSelect, false);
 
 
   </script>

@@ -81,19 +81,18 @@
   </div>
   <script>
       var bucketName = 'itms444juwon';
+      var bucketRegion = 'us-west-2';
       var grayBucket = 'afterrender';
-      AWS.config.region = 'us-west-2';
+      var IdentityPoolId = 'us-west-2:b79ec16a-b3da-4bf5-adcc-4c45db016e42';
       var s3url = 'https://s3-us-west-2.amazonaws.com/';
 
       var myid = localStorage.getItem("myid");
       //var UserIdforaws = 1618457058186092;
 
       AWS.config.update({
-          accessKeyId: 'AKIAIOEQBRCNB57I2AXA',
-          secretAccessKey: 'iVgVVdeHKtRCcBs8uUafD/xvTe0rwa9o9vk0iV',
-          region: 'us-west-2',
+          region: bucketRegion,
           credentials: new AWS.CognitoIdentityCredentials({
-              IdentityPoolId: 'us-east-2_MDn4cVooH'
+              IdentityPoolId: IdentityPoolId
           })
       });
 
@@ -114,22 +113,10 @@
           }
       });
 
-      S3bucket.config.credentials = new AWS.WebIdentityCredentials({
-          ProviderId: 'graph.facebook.com',
-          RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
-          WebIdentityToken: 'EAAFK10kZC7UgBAMHQTI1Lf5GR1AZBFhbC5I6xWJPg18Uew3r6mDTmHmhHvdaIKBOxVsM40TBSAS4SR89RlkfX9S6yRTv6ZBof8dz5KGgy1P0gv42Cms9hMSL1oRz1EouHxsxI4jU4qf1ZA0SWpfV88iWOyESB0hZAWgbzYVQ9asTyYDnaOuccw8h9Eh36rAYo7c5wfLUCNQZDZD'
-      });
-
-      grayS3bucket.config.credentials = new AWS.WebIdentityCredentials({
-          ProviderId: 'graph.facebook.com',
-          RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
-          WebIdentityToken: 'EAAFK10kZC7UgBAMHQTI1Lf5GR1AZBFhbC5I6xWJPg18Uew3r6mDTmHmhHvdaIKBOxVsM40TBSAS4SR89RlkfX9S6yRTv6ZBof8dz5KGgy1P0gv42Cms9hMSL1oRz1EouHxsxI4jU4qf1ZA0SWpfV88iWOyESB0hZAWgbzYVQ9asTyYDnaOuccw8h9Eh36rAYo7c5wfLUCNQZDZD'
-      });
-
       listObjs();
 
       function listObjs() {
-          var prefix = 'myphoto-' + myid;
+          var prefix = 'myphoto-' + 'myidtoString';
           S3bucket.listObjects({
               Prefix: prefix
           }, function (err, data) {
