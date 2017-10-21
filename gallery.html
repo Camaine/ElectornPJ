@@ -133,6 +133,7 @@
 
       function listObjs() {
           var prefix = 'myphoto-' + myid;
+          var grayprefix = 'graymyphoto-' + myid;
           S3bucket.listObjects({
               Prefix: prefix
           }, function (err, data) {
@@ -150,19 +151,19 @@
               }
           });
 
-          grayS3bucket.listObjects({
-              Prefix: prefix
+          S3bucket.listObjects({
+              Prefix: grayprefix
           }, function (err, data) {
               if (err) {
                   console.log('ERROR: ' + err);
               } else {
                   var objKeys = "";
                   var htmlPhoto = "";
-                  var photourl = s3url + graybucketName+"/";
+                  var photourl = s3url + bucketName+"/";
                   data.Contents.forEach(function (obj) {
                       objKeys += obj.Key + "<br>";
                       FULL_IMAGE(photourl + obj.Key);
-                      htmlPhoto += "<canvas class = \"thumb\" src = \""+photourl + obj.Key + "\"/>";
+                      //htmlPhoto += "<canvas class = \"thumb\" src = \""+photourl + obj.Key + "\"/>";
                   });
                   document.getElementById("grayimg").innerHTML = htmlPhoto;
               }
