@@ -64,19 +64,22 @@
   <div class="navbar navbar-dark bg-dark">
     <div class="container d-flex justify-content-between">
       <a href="#" class="navbar-brand">Album</a>
-      <button id = "LoginBtn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-        Login
-      </button>
     </div>
   </div>
 
   <section class="jumbotron text-center">
     <div class="container">
-      <h1 class="jumbotron-heading">Welcome my gallery</h1>
-      <p class="lead text-muted">Let's share your gallery</p>
+      <p class="lead text-muted">Type your info</p>
       <p>
-        <a href="submit2.html" class="btn btn-primary">Submit Page</a>
-        <a href="gallery.html" class="btn btn-secondary">Gallery Page</a>
+        <a>Your Email</a>
+        <input type="text" id="myemail"><br>
+      </p>
+      <p>
+        <a>Your Phone</a>
+        <input type="text" id="myphone"><br>
+      </p>
+      <p>
+        <a href="submit2.html" class="btn btn-primary" id="LoginBtn"}>Login</a>
       </p>
     </div>
   </section>
@@ -89,8 +92,12 @@
           }
       });
       var Loginbtn = document.getElementById('LoginBtn');
+      var email = document.getElementById('myemail');
+      var phone = document.getElementById('myphone');
       Loginbtn.addEventListener('click', function () {
-          FaceBookInit();
+          var db = window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/login.php?myemail=" + email.toString() + "&myphone=" + phone.toString(), '_blank');
+          localStorage.setItem("myid",db);
+          console.log(db);
       }, false);
   </script>
 

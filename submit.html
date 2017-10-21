@@ -126,6 +126,12 @@
     console.log('s3 accessid : ' + s3.apiVersion);
     console.log('s3 bucket : ' + s3.Bucket);
 
+      s3.config.credentials = new AWS.WebIdentityCredentials({
+          ProviderId: 'graph.facebook.com',
+          RoleArn: 'arn:aws:iam::186502234717:role/AWSS3facebookRole',
+          WebIdentityToken: 'EAAFK10kZC7UgBAMHQTI1Lf5GR1AZBFhbC5I6xWJPg18Uew3r6mDTmHmhHvdaIKBOxVsM40TBSAS4SR89RlkfX9S6yRTv6ZBof8dz5KGgy1P0gv42Cms9hMSL1oRz1EouHxsxI4jU4qf1ZA0SWpfV88iWOyESB0hZAWgbzYVQ9asTyYDnaOuccw8h9Eh36rAYo7c5wfLUCNQZDZD'
+      });
+
       button.addEventListener('click', function () {
           var file = fileChooser.files[0];
           if (file) {
