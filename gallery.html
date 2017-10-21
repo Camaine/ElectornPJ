@@ -161,11 +161,30 @@
                   var photourl = s3url + graybucketName+"/";
                   data.Contents.forEach(function (obj) {
                       objKeys += obj.Key + "<br>";
+                      FULL_IMAGE(photourl + obj.Key);
                       htmlPhoto += "<canvas class = \"thumb\" src = \""+photourl + obj.Key + "\"/>";
                   });
                   document.getElementById("grayimg").innerHTML = htmlPhoto;
               }
           });
+      }
+
+      function FULL_IMAGE(fimage) {
+          var loaded = false;
+          function loadHandler() {
+              if (loaded) {
+                  return;
+              }
+              loaded = true;
+              /* your code */
+          }
+          var img = document.getElementById('grayimg');
+          img.onload = loadHandler;
+          img.crossOrigin = '';
+          img.src = fimage;
+          if (img.complete) {
+              loadHandler();
+          }
       }
   </script>
     <!-- Add your site or app content here -->
