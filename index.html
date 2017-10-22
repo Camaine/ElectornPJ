@@ -95,7 +95,7 @@
       var email = document.getElementById('myemail').value;
       var phone = document.getElementById('myphone').value;
       Loginbtn.addEventListener('click', function () {
-          var db = window.open("http://ec2-13-59-162-156.us-east-2.compute.amazonaws.com/login.php?myemail=" + email.toString() + "&myphone=" + phone.toString(), '_blank');
+          var db = window.open("./login.php?myemail=" + email.toString() + "&myphone=" + phone.toString(), '_blank');
 
       }, false);
   </script>
