@@ -4,7 +4,7 @@ mysqli_query($db, "INSERT INTO LOG (email,phone) VALUES('".$_GET['myemail']."', 
 $getid = mysqli_query($db, "SELECT id FROM LOG WHERE email = '".$_GET['myemail']."'");
 $row = mysqli_fetch_row($getid);
 echo $row[0];
-echo '<script>';
+echo '<script type="text/javascript">';
 echo 'var myid = ' .$row[0].';';
 echo 'localStorage.setItem("myid",myid);';
 echo '</script>';
