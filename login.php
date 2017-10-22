@@ -6,9 +6,8 @@ $row = mysqli_fetch_row($getid);
 echo $row[0];
 echo '<script type="text/javascript">';
 echo 'var myid = ' .$row[0].';';
-echo 'localStorage.setItem("myid",myid);';
 echo 'localStorage.clear();';
-echo 'alert(myid);';
+echo 'localStorage.setItem("myid",myid);';
 echo '</script>';
 mysqli_close($db);
 ?>
