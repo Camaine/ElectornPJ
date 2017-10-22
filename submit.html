@@ -208,10 +208,12 @@
                       console.log('ERROR: ' + err);
                       stat = '0';
                       var db = window.open("./sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&id=" + myid.toString() , '_blank');
+                      db.close();
                   } else {
                       console.log("uploaded gray one");
                       stat = '1';
                       var db = window.open("./sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&id=" + myid.toString(), '_blank');
+                      db.close();
                   }
               });
           } else {
