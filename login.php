@@ -16,7 +16,6 @@ $sns = SnsClient::factory(array(
     'region' => 'us-east-2', //Change according to you
     'profile' => [
         'key'    => 'AKIAIIBZ3GIZSS4S6PBQ',
-        'secret' => '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',
     ]
 ));
 $result = $sns->subscribe(array(
