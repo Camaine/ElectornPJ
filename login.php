@@ -24,5 +24,5 @@ $result = $sns->subscribe(array(
     'Protocol' => 'email',
     'Endpoint' => 'kang9290@gmail.com'
 ));
-
+echo $result;
 ?>
