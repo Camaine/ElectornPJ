@@ -14,11 +14,14 @@ mysqli_close($db);
 use Aws\Sns\SnsClient;
 use Aws\Credentials\CredentialProvider;
 $provider = CredentialProvider::defaultProvider();
-$sns = SnsClient::factory(array(
+$sns = new SnsClient([
 
     'region' => 'us-east-2', //Change according to you
-    'profile' => $provider
-));
+    'version' => '2010-03-31', //Change according to you
+    'credentials' => $provider,
+    'scheme' => 'http', //disables SSL certification, there was an error on enabling it
+
+]);
 $result = $sns->subscribe(array(
     // TopicArn is required
     'TopicArn' => 'arn:aws:sns:us-east-2:186502234717:juwonkim',
