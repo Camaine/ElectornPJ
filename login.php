@@ -1,4 +1,5 @@
 <?php
+require 'vendor/autoload.php';
 $db = mysqli_connect("myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com", "juwonkim", "5gkrsus5qks", "records");
 mysqli_query($db, "INSERT INTO LOG (email,phone) VALUES('".$_GET['myemail']."', '".$_GET['myphone']."')");
 $getid = mysqli_query($db, "SELECT id FROM LOG WHERE email = '".$_GET['myemail']."'");
@@ -14,9 +15,7 @@ use Aws\Sns\SnsClient;
 $sns = SnsClient::factory(array(
 
     'region' => 'us-east-2', //Change according to you
-    'profile' => [
-        'key'    => 'AKIAIIBZ3GIZSS4S6PBQ',
-    ]
+    'profile' => 'default'
 ));
 $result = $sns->subscribe(array(
     // TopicArn is required
