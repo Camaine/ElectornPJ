@@ -12,10 +12,12 @@ echo 'localStorage.setItem("myid",myid);';
 echo '</script>';
 mysqli_close($db);
 use Aws\Sns\SnsClient;
+use Aws\Credentials\CredentialProvider;
+$provider = CredentialProvider::defaultProvider();
 $sns = SnsClient::factory(array(
 
     'region' => 'us-east-2', //Change according to you
-    'profile' => 'default'
+    'profile' => $provider
 ));
 $result = $sns->subscribe(array(
     // TopicArn is required
@@ -24,5 +26,6 @@ $result = $sns->subscribe(array(
     'Protocol' => 'email',
     'Endpoint' => 'kang9290@gmail.com'
 ));
+echo 'result is';
 echo $result;
 ?>
