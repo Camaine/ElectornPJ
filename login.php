@@ -19,12 +19,12 @@ $sns = SnsClient::factory(array(
         'secret' => 'GEmgupxazCnrm8ggTRniY6Cr3A1ufIR9Xaw74aI0',
     ]
 ));
-/*$result = $sns->subscribe(array(
+$result = $sns->subscribe(array(
     // TopicArn is required
     'TopicArn' => 'arn:aws:sns:us-east-2:186502234717:juwonkim',
     // Protocol is required
     'Protocol' => 'email',
     'Endpoint' => '".$_GET['myemail']."'
-));*/
+));
 
 ?>
