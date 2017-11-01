@@ -3,6 +3,13 @@ $db = mysqli_connect("myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com", "ju
 mysqli_query($db, "INSERT INTO LOG (email,phone) VALUES('".$_GET['myemail']."', '".$_GET['myphone']."')");
 $getid = mysqli_query($db, "SELECT id FROM LOG WHERE email = '".$_GET['myemail']."'");
 $row = mysqli_fetch_row($getid);
+echo $row[0];
+echo '<script type="text/javascript">';
+echo 'var myid = ' .$row[0].';';
+echo 'localStorage.clear();';
+echo 'localStorage.setItem("myid",myid);';
+echo '</script>';
+mysqli_close($db);
 use Aws\Sns\SnsClient;
 $sns = SnsClient::factory(array(
 
@@ -19,11 +26,5 @@ $sns = SnsClient::factory(array(
     'Protocol' => 'email',
     'Endpoint' => '".$_GET['myemail']."'
 ));*/
-echo $row[0];
-echo '<script type="text/javascript">';
-echo 'var myid = ' .$row[0].';';
-echo 'localStorage.clear();';
-echo 'localStorage.setItem("myid",myid);';
-echo '</script>';
-mysqli_close($db);
+
 ?>
