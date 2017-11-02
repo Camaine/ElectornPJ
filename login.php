@@ -1,5 +1,5 @@
 <?php
-require './vendor/autoload.php';
+
 $db = mysqli_connect("myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com", "juwonkim", "5gkrsus5qks", "records");
 mysqli_query($db, "INSERT INTO LOG (email,phone) VALUES('".$_GET['myemail']."', '".$_GET['myphone']."')");
 $getid = mysqli_query($db, "SELECT id FROM LOG WHERE email = '".$_GET['myemail']."'");
@@ -11,6 +11,7 @@ echo 'localStorage.clear();';
 echo 'localStorage.setItem("myid",myid);';
 echo '</script>';
 mysqli_close($db);
+require './vendor/autoload.php';
 $sns = new Aws\Sns\SnsClient([
     'region' => 'us-east-2', //Change according to you
     'version' => 'latest', //Change according to you
