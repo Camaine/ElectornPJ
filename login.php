@@ -23,7 +23,7 @@ $sns = snsClient::factory(array(
 
 ));
 
-/*$result = $sns -> createTopic([
+$result = $sns -> createTopic([
     'Name' => 'Testing',
 ]);
 /*$result = $sns->subscribe(array(
