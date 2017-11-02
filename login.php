@@ -1,5 +1,5 @@
 <?php
-require 'vendor/autoload.php';
+require './vendor/autoload.php';
 $db = mysqli_connect("myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com", "juwonkim", "5gkrsus5qks", "records");
 mysqli_query($db, "INSERT INTO LOG (email,phone) VALUES('".$_GET['myemail']."', '".$_GET['myphone']."')");
 $getid = mysqli_query($db, "SELECT id FROM LOG WHERE email = '".$_GET['myemail']."'");
@@ -17,7 +17,7 @@ $provider = CredentialProvider::defaultProvider();
 $sns = new SnsClient([
 
     'region' => 'us-east-2', //Change according to you
-    'version' => '2010-03-31', //Change according to you
+    'version' => 'latest', //Change according to you
     'credentials' => $provider,
     'scheme' => 'http', //disables SSL certification, there was an error on enabling it
 
