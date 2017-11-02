@@ -21,7 +21,7 @@ $result = $sns->subscribe(array(
     'TopicArn' => 'arn:aws:sns:us-east-2:186502234717:juwonkim',
     // Protocol is required
     'Protocol' => 'email',
-    'Endpoint' => '".$_GET['myemail']."'
+    'Endpoint' => $_GET['myemail']
 ));
 echo 'result is';
 if ($result)
