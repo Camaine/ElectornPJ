@@ -11,6 +11,7 @@ echo 'localStorage.clear();';
 echo 'localStorage.setItem("myid",myid);';
 echo '</script>';
 mysqli_close($db);
+
 require './vendor/autoload.php';
 $sns = new Aws\Sns\SnsClient([
     'region' => 'us-east-2', //Change according to you
