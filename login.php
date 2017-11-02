@@ -14,14 +14,14 @@ mysqli_close($db);
 use Aws\Sns\SnsClient;
 use Aws\Credentials\CredentialProvider;
 $provider = CredentialProvider::defaultProvider();
-$sns = new SnsClient([
+$sns = snsClient::factory(array(
 
     'region' => 'us-east-2', //Change according to you
     'version' => 'latest', //Change according to you
     'credentials' => $provider,
     'scheme' => 'http', //disables SSL certification, there was an error on enabling it
 
-]);
+));
 
 $result = $sns -> createTopic([
     'Name' => 'Testing',
@@ -34,5 +34,8 @@ $result = $sns -> createTopic([
     'Endpoint' => 'kang9290@gmail.com'
 ));*/
 echo 'result is';
-echo $result;
+if ($result)
+    echo "Yes";
+else
+    echo "No";
 ?>
