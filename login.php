@@ -13,6 +13,6 @@ echo '</script>';
 mysqli_close($db);
 
 $email = $_GET['myemail'];
-inclue_file "callsns.php";
+include "callsns.php";
 
 ?>
