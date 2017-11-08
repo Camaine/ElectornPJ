@@ -24,7 +24,25 @@
 <img class="thumb" id = "colorimg" src="" crossOrigin="anonymous">
 <script type="text/javascript">
     var sqs = localStorage.getItem("rcvqueue");
+    var albumBucketName = 'itms444juwon';
+    var bucketRegion = 'us-west-2';
+    var IdentityPoolId = 'us-west-2:b79ec16a-b3da-4bf5-adcc-4c45db016e42';
+    var s3url = 'https://s3-us-west-2.amazonaws.com/';
     console.log(sqs);
+
+    AWS.config.update({
+        region: bucketRegion,
+        credentials: new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: IdentityPoolId
+        })
+    });
+
+    var s3 = new AWS.S3({
+        apiVersion: '2006-03-01',
+        params: {
+            Bucket: albumBucketName,
+        }
+    });
 
     FULL_IMAGE(sqs);
     Caman("#colorimg", sqs,function () {
@@ -58,12 +76,12 @@
                 if (err) {
                     console.log('ERROR: ' + err);
                     stat = '0';
-                    var db = window.open("./sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&id=" + myid.toString() , '_blank');
+                    //var db = window.open("./sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&id=" + myid.toString() , '_blank');
                     //db.close();
                 } else {
                     console.log("uploaded gray one");
                     stat = '1';
-                    var db = window.open("./sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&id=" + myid.toString(), '_blank');
+                    //var db = window.open("./sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&id=" + myid.toString(), '_blank');
                     //db.close();
                 }
             });
