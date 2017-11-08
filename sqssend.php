@@ -11,12 +11,11 @@ try{
     $result = $sqs->sendMessage([
         'MessageAttributes' => [
             '<String>' => [
-                'DataType' => 'String' // REQUIRED
+                'DataType' => 'String'
             ],
-            // ...
         ],
-        'MessageBody' => 'test', // REQUIRED
-        'QueueUrl' => 'https://sqs.us-east-2.amazonaws.com/186502234717/itmo-juwonkim' // REQUIRED
+        'MessageBody' => 'test',
+        'QueueUrl' => 'https://sqs.us-east-2.amazonaws.com/186502234717/itmo-juwonkim'
     ]);
     echo 'result is';
     if ($result)
