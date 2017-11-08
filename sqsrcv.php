@@ -19,7 +19,7 @@ try{
     else
         echo "No";
     $rcvhandle = $rcv['Messages'][0]['ReceiptHandle'];
-    $rcvuid = $rcv['Messages'][0]['Body']."\n";
+    $rcvuid = $rcv['Messages'][0]['Body'];
     echo $rcvuid;
     echo '<script type="text/javascript">';
     echo 'var rcvmsg = \''.$rcvuid.'\';';
