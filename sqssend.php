@@ -2,6 +2,7 @@
 require './vendor/autoload.php';
 use Aws\Exception\AwsException;
 $sqs = new Aws\Sqs\SqsClient([
+    'profile' => 'default',
     'region' => 'us-east-2',
     'version' => 'latest'
 ]);
