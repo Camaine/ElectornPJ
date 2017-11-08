@@ -22,7 +22,7 @@
 </head>
 <body>
 <script type="text/javascript">
-    var test = '<?phprequire \'./vendor/autoload.php\';\n' +
+    var test = '<?php require \'./vendor/autoload.php\';\n' +
         '    use Aws\\Exception\\AwsException;\n' +
         '    $sqs = new Aws\\Sqs\\SqsClient([\n' +
         '    \'region\' => \'us-east-2\',\n' +
@@ -47,7 +47,7 @@
         '    }\n' +
         '\n' +
         '    ?>)';
-    alert(test);
+    console.log(test);
 </script>
 </body>
 </html>
