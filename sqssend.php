@@ -22,7 +22,7 @@ try{
 }
 
 try{
-    $rcv = $client->receiveMessage([
+    $rcv = $sqs->receiveMessage([
     'MaxNumberOfMessages' => 1,
     'QueueUrl' => 'https://sqs.us-east-2.amazonaws.com/186502234717/itmo-juwonkim',
     'VisibilityTimeout' => 60,
