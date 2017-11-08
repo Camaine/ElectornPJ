@@ -95,6 +95,9 @@
       <p>
         <a href="gallery.html" class="btn btn-primary">Check Gallery</a>
       </p>
+      <p>
+        <a href="imgprocess.html" class="btn btn-primary" id="rcvsqs">Image Processing</a>
+      </p>
     </div>
   </section>
 
@@ -120,6 +123,7 @@
       var myid = localStorage.getItem("myid");
       var fileChooser = document.getElementById("photoupload");
       var button = document.getElementById('upload-button');
+      var sqsrcv_btn = document.getElementById("rcvsqs");
 
       console.log('region : '+bucketRegion);
       console.log('AWS config');
@@ -166,14 +170,15 @@
                   } else {
                       console.log(data);
                       s3raw = s3url + albumBucketName+"/"+'myphoto-' + myid.toString();
-                      FULL_IMAGE(s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + file.name);
+                      var sqssend = ("./sqssend.php?source="+s3raw);
+                      /*FULL_IMAGE(s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + file.name);
                       Caman("#colorimg", s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + file.name ,function () {
                           this.saturation(-100);
                           this.size
                           this.render();
                           console.log("render");
                       });
-                      getRendered();
+                      getRendered();*/
                   }
               });
           } else {
@@ -181,6 +186,10 @@
           }
           console.log("test2");
 
+      }, false);
+
+      sqsrcv_btn.addEventListener('click', function(){
+          var sqsrcvwindow = ("./sqsrcv.php");
       }, false);
 
       function getRendered(){

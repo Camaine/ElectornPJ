@@ -21,33 +21,93 @@
     <title>Image turn into Grayscale</title>
 </head>
 <body>
+<img class="thumb" id = "colorimg" src="" crossOrigin="anonymous">
 <script type="text/javascript">
-    var test = '<?php require \'./vendor/autoload.php\';\n' +
-        '    use Aws\\Exception\\AwsException;\n' +
-        '    $sqs = new Aws\\Sqs\\SqsClient([\n' +
-        '    \'region\' => \'us-east-2\',\n' +
-        '    \'version\' => \'latest\' ]);\n' +
-        '    try{\n' +
-        '    $rcv = $sqs->receiveMessage([\n' +
-        '        \'MaxNumberOfMessages\' => 1,\n' +
-        '        \'QueueUrl\' => \'https://sqs.us-east-2.amazonaws.com/186502234717/itmo-juwonkim\',\n' +
-        '    \'VisibilityTimeout\' => 60,\n' +
-        '    \'WaitTimeSeconds\' => 5,\n' +
-        '    ]);\n' +
-        '    echo \'result is\';\n' +
-        '    if ($rcv)\n' +
-        '    echo "Yes";\n' +
-        '    else\n' +
-        '    echo "No";\n' +
-        '    $rcvhandle = $rcv[\'Messages\'][0][\'ReceiptHandle\'];\n' +
-        '    $rcvuid = $rcv[\'Messages\'][0][\'Body\']."\\n";\n' +
-        '    echo $rcvuid;\n' +
-        '    }catch(AwsException $e){\n' +
-        '        echo "receive fail";\n' +
-        '    }\n' +
-        '\n' +
-        '    ?>)';
-    console.log(test);
+    var sqs = localStorage.getItem("rcvqueue");
+    console.log(sqs);
+
+    FULL_IMAGE(sqs);
+    Caman("#colorimg", sqs,function () {
+        this.saturation(-100);
+        this.size
+        this.render();
+        console.log("render");
+    });
+
+    function getRendered(){
+        var rendered = document.getElementById("colorimg");
+        var dataURL =  rendered.toDataURL('image/jpeg',1.0);
+        var blob = dataURItoBlob(dataURL);
+        var file = new File([blob], filename);
+
+        if (file) {
+            //Object key will be facebook-USERID#/FILE_NAME
+            var objKey = 'graymyphoto-' + myid.toString() + '/' + filename;
+            console.log(objKey);
+            var params = {
+                Key: objKey,
+                ContentType: file.type,
+                Body: file,
+                ACL: 'public-read'
+            };
+
+            console.log(blob);
+            s3end = s3url + albumBucketName+"/"+'graymyphoto-' + myid.toString();
+            receipt = 'myphoto-' + myid.toString();
+            s3.putObject(params, function (err, data) {
+                if (err) {
+                    console.log('ERROR: ' + err);
+                    stat = '0';
+                    var db = window.open("./sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&id=" + myid.toString() , '_blank');
+                    //db.close();
+                } else {
+                    console.log("uploaded gray one");
+                    stat = '1';
+                    var db = window.open("./sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&id=" + myid.toString(), '_blank');
+                    //db.close();
+                }
+            });
+        } else {
+            grayresults.innerHTML = 'Nothing to upload.';
+        }
+
+    }
+
+    function FULL_IMAGE(fimage) {
+        var loaded = false;
+        function loadHandler() {
+            if (loaded) {
+                return;
+            }
+            loaded = true;
+            /* your code */
+        }
+        var img = document.getElementById('colorimg');
+        img.onload = loadHandler;
+        img.crossOrigin = '';
+        img.src = fimage;
+        if (img.complete) {
+            loadHandler();
+        }
+    }
+
+    function dataURItoBlob(dataURI)
+    {
+        var byteString = atob(dataURI.split(',')[1]);
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+        var ab = new ArrayBuffer(byteString.length);
+        var ia = new Uint8Array(ab);
+        for (var i = 0; i < byteString.length; i++)
+        {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        var bb = new Blob([ab], { "type": mimeString });
+        return bb;
+    }
+
+    getRendered();
+
 </script>
 </body>
 </html>

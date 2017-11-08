@@ -21,6 +21,10 @@ try{
     $rcvhandle = $rcv['Messages'][0]['ReceiptHandle'];
     $rcvuid = $rcv['Messages'][0]['Body']."\n";
     echo $rcvuid;
+    echo '<script type="text/javascript">';
+    echo 'var rcvmsg = '.$rcvuid.';';
+    echo 'localStorage.setItem("rcvqueue",rcvmsg);';
+    echo '</script>';
 }catch(AwsException $e){
     echo "receive fail";
 }
