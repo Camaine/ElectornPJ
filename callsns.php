@@ -1,6 +1,6 @@
 <?php
 require './vendor/autoload.php';
-$sqs = new Aws\Sns\SnsClient([
+$sns = new Aws\Sns\SnsClient([
 	'region' => 'us-east-2',
 	'version' => 'latest'
 ]);
@@ -10,7 +10,7 @@ $sqs = new Aws\Sns\SnsClient([
 
 echo $_GET['myemail'];
 
-$result = $sqs->subscribe(array(
+$result = $sns->subscribe(array(
     // TopicArn is required
     'TopicArn' => 'arn:aws:sns:us-east-2:186502234717:juwonkim',
     // Protocol is required
