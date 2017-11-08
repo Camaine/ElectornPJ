@@ -6,16 +6,9 @@ $sqs = new Aws\Sqs\SqsClient([
     'version' => 'latest'
 ]);
 
-$listq = $sqs->listQueues([]);
-print_r($listq);
-/*
 try{
     $result = $sqs->sendMessage([
-        'MessageAttributes' => [
-            '<String>' => [
-                'DataType' => 'String'
-            ],
-        ],
+        'DelaySeconds' => 30,
         'MessageBody' => 'test',
         'QueueUrl' => 'https://sqs.us-east-2.amazonaws.com/186502234717/itmo-juwonkim'
     ]);
@@ -26,7 +19,7 @@ try{
         echo "No";
 }catch(AwsException $e){
     echo "Fail";
-}*/
+}
 
 
 ?>
