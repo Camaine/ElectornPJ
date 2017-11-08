@@ -15,7 +15,7 @@ try{
             ],
             // ...
         ],
-        'MessageBody' => $_GET['id'], // REQUIRED
+        'MessageBody' => 'test', // REQUIRED
         'QueueUrl' => 'https://sqs.us-east-2.amazonaws.com/186502234717/itmo-juwonkim' // REQUIRED
     ]);
     echo 'result is';
