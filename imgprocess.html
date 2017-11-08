@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.133.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="./scripts/CamanJS-4.1.1/dist/caman.full.pack.js"></script>
+    <script src="./scripts/CamanJS-4.1.1/dist/caman.min.js"></script>
+    <style>
+        .thumb {
+            height: 500px;
+            border: 1px solid #000;
+            margin: 10px 5px 0 0;
+        }
+        canvas {
+            height: 500px;
+            border: 1px solid #000;
+            margin: 10px 5px 0 0;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Image turn into Grayscale</title>
+</head>
+<body>
+<script type="text/javascript">
+    alert(<?php
+    require './vendor/autoload.php';
+    use Aws\Exception\AwsException;
+    $sqs = new Aws\Sqs\SqsClient([
+    'region' => 'us-east-2',
+    'version' => 'latest'
+]);
+
+try{
+    $rcv = $sqs->receiveMessage([
+        'MaxNumberOfMessages' => 1,
+        'QueueUrl' => 'https://sqs.us-east-2.amazonaws.com/186502234717/itmo-juwonkim',
+    'VisibilityTimeout' => 60,
+    'WaitTimeSeconds' => 5,
+    ]);
+    echo 'result is';
+    if ($rcv)
+    echo "Yes";
+    else
+    echo "No";
+    $rcvhandle = $rcv['Messages'][0]['ReceiptHandle'];
+    $rcvuid = $rcv['Messages'][0]['Body']."\n";
+    echo $rcvuid;
+    }catch(AwsException $e){
+        echo "receive fail";
+    }
+
+    ?>);
+</script>
+</body>
+</html>
