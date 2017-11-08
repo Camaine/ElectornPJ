@@ -21,24 +21,4 @@ try{
     echo "send fail";
 }
 
-try{
-    $rcv = $sqs->receiveMessage([
-    'MaxNumberOfMessages' => 1,
-    'QueueUrl' => 'https://sqs.us-east-2.amazonaws.com/186502234717/itmo-juwonkim',
-    'VisibilityTimeout' => 60,
-    'WaitTimeSeconds' => 5,
-    ]);
-    echo 'result is';
-    if ($rcv)
-        echo "Yes";
-    else
-        echo "No";
-    $rcvhandle = $rcv['Messages'][0]['ReceiptHandle'];
-    $rcvuid = $rcv['Messages'][0]['Body']."\n";
-    echo $rcvuid;
-}catch(AwsException $e){
-    echo "receive fail";
-}
-
-
 ?>
