@@ -22,34 +22,32 @@
 </head>
 <body>
 <script type="text/javascript">
-    alert(<?php
-    require './vendor/autoload.php';
-    use Aws\Exception\AwsException;
-    $sqs = new Aws\Sqs\SqsClient([
-    'region' => 'us-east-2',
-    'version' => 'latest'
-]);
-
-try{
-    $rcv = $sqs->receiveMessage([
-        'MaxNumberOfMessages' => 1,
-        'QueueUrl' => 'https://sqs.us-east-2.amazonaws.com/186502234717/itmo-juwonkim',
-    'VisibilityTimeout' => 60,
-    'WaitTimeSeconds' => 5,
-    ]);
-    echo 'result is';
-    if ($rcv)
-    echo "Yes";
-    else
-    echo "No";
-    $rcvhandle = $rcv['Messages'][0]['ReceiptHandle'];
-    $rcvuid = $rcv['Messages'][0]['Body']."\n";
-    echo $rcvuid;
-    }catch(AwsException $e){
-        echo "receive fail";
-    }
-
-    ?>);
+    var test = '<?phprequire \'./vendor/autoload.php\';\n' +
+        '    use Aws\\Exception\\AwsException;\n' +
+        '    $sqs = new Aws\\Sqs\\SqsClient([\n' +
+        '    \'region\' => \'us-east-2\',\n' +
+        '    \'version\' => \'latest\' ]);\n' +
+        '    try{\n' +
+        '    $rcv = $sqs->receiveMessage([\n' +
+        '        \'MaxNumberOfMessages\' => 1,\n' +
+        '        \'QueueUrl\' => \'https://sqs.us-east-2.amazonaws.com/186502234717/itmo-juwonkim\',\n' +
+        '    \'VisibilityTimeout\' => 60,\n' +
+        '    \'WaitTimeSeconds\' => 5,\n' +
+        '    ]);\n' +
+        '    echo \'result is\';\n' +
+        '    if ($rcv)\n' +
+        '    echo "Yes";\n' +
+        '    else\n' +
+        '    echo "No";\n' +
+        '    $rcvhandle = $rcv[\'Messages\'][0][\'ReceiptHandle\'];\n' +
+        '    $rcvuid = $rcv[\'Messages\'][0][\'Body\']."\\n";\n' +
+        '    echo $rcvuid;\n' +
+        '    }catch(AwsException $e){\n' +
+        '        echo "receive fail";\n' +
+        '    }\n' +
+        '\n' +
+        '    ?>)';
+    alert(test);
 </script>
 </body>
 </html>
