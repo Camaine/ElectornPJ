@@ -6,7 +6,6 @@ $sqs = new Aws\Sqs\SqsClient([
     'version' => 'latest'
 ]);
 
-echo $_GET['id'];
 try{
     $result = $sqs->sendMessage([
         'MessageAttributes' => [
