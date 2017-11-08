@@ -2,11 +2,13 @@
 require './vendor/autoload.php';
 use Aws\Exception\AwsException;
 $sqs = new Aws\Sqs\SqsClient([
-    'profile' => 'default',
     'region' => 'us-east-2',
     'version' => 'latest'
 ]);
 
+$listq = $sqs->listQueues([]);
+print_r($listq);
+/*
 try{
     $result = $sqs->sendMessage([
         'MessageAttributes' => [
@@ -24,7 +26,7 @@ try{
         echo "No";
 }catch(AwsException $e){
     echo "Fail";
-}
+}*/
 
 
 ?>
