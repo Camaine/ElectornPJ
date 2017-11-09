@@ -23,12 +23,13 @@
 <body>
 <img class="thumb" id = "colorimg" src="" crossOrigin="anonymous">
 <script type="text/javascript">
-    var sqs = localStorage.getItem("rcvqueue");
+    var filename = localStorage.getItem("rcvqueue");
+    var myid = localStorage.getItem("myid");
     var albumBucketName = 'itms444juwon';
     var bucketRegion = 'us-west-2';
     var IdentityPoolId = 'us-west-2:b79ec16a-b3da-4bf5-adcc-4c45db016e42';
     var s3url = 'https://s3-us-west-2.amazonaws.com/';
-    console.log(sqs);
+    console.log(filename);
 
     AWS.config.update({
         region: bucketRegion,
@@ -44,8 +45,8 @@
         }
     });
 
-    FULL_IMAGE(sqs);
-    Caman("#colorimg", sqs,function () {
+    FULL_IMAGE(s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + filename);
+    Caman("#colorimg", s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + filename,function () {
         this.saturation(-100);
         this.size
         this.render();
