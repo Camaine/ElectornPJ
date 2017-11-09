@@ -29,6 +29,8 @@
     var bucketRegion = 'us-west-2';
     var IdentityPoolId = 'us-west-2:b79ec16a-b3da-4bf5-adcc-4c45db016e42';
     var s3url = 'https://s3-us-west-2.amazonaws.com/';
+    var s3raw = '';
+    var s3end = '';
     console.log(filename);
 
     AWS.config.update({
@@ -45,8 +47,9 @@
         }
     });
 
-    FULL_IMAGE(s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + filename);
-    Caman("#colorimg", s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + filename,function () {
+    s3raw = s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + filename;
+    FULL_IMAGE(s3raw);
+    Caman("#colorimg", s3raw,function () {
         this.saturation(-100);
         this.size
         this.render();
@@ -77,13 +80,13 @@
             s3.putObject(params, function (err, data) {
                 if (err) {
                     console.log('ERROR: ' + err);
-                    stat = '0';
-                    //var db = window.open("./sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&id=" + myid.toString() , '_blank');
+                    var stat = '0';
+                    var db = window.open("./sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&id=" + myid.toString() , '_blank');
                     //db.close();
                 } else {
                     console.log("uploaded gray one");
-                    stat = '1';
-                    //var db = window.open("./sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&id=" + myid.toString(), '_blank');
+                    var stat = '1';
+                    var db = window.open("./sendS3pre.php?s3raw=" + s3raw.toString() + "&s3end=" + s3end.toString() + "&stat=" + stat.toString() + "&receipt=" + receipt.toString() + "&id=" + myid.toString(), '_blank');
                     //db.close();
                 }
             });
