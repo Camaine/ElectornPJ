@@ -170,7 +170,7 @@
                   } else {
                       console.log(data);
                       s3raw = s3url + albumBucketName+"/"+'myphoto-' + myid.toString();
-                      var sqssend = window.open(file.name, '_blank');
+                      var sqssend = window.open("./sqssend.php?source="+file.name, '_blank');
                       /*FULL_IMAGE(s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + file.name);
                       Caman("#colorimg", s3url + albumBucketName+"/"+'myphoto-' + myid.toString() + "/" + file.name ,function () {
                           this.saturation(-100);
