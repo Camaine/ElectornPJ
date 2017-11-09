@@ -25,6 +25,10 @@ try{
     echo 'var rcvmsg = \''.$rcvuid.'\';';
     echo 'localStorage.setItem("rcvqueue",rcvmsg);';
     echo '</script>';
+    $result = $client->deleteMessage([
+        'QueueUrl' => 'https://sqs.us-east-2.amazonaws.com/186502234717/itmo-juwonkim', // REQUIRED
+        'ReceiptHandle' => $rcvhandle, // REQUIRED
+    ]);
 }catch(AwsException $e){
     echo "receive fail";
 }
