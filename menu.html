@@ -64,6 +64,7 @@
 <div class="navbar navbar-dark bg-dark">
     <div class="container d-flex justify-content-between">
         <a href="#" class="navbar-brand">Album</a>
+        <a href="admin.html" class="btn btn-primary" id="adminbtn">Admin</a>
     </div>
 </div>
 
@@ -81,7 +82,12 @@
 <!-- Add your site or app content here -->
 <script>
     var myid = localStorage.getItem('myid');
+    var myhost = localStorage.getItem('myhost');
+    var adminbtn = document.getElementById("adminbtn");
     console.log(myid);
+    if(myhost.isEqual("1")){
+        adminbtn.style.display = 'none';
+    }
 </script>
 <!-- build:js scripts/main.min.js -->
 <script src="scripts/main.js"></script>
