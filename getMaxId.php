@@ -25,6 +25,7 @@ echo 'localStorage.setItem("cnt",cnt);';
 echo 'localStorage.setItem("ids",ids);';
 echo 'localStorage.setItem("emails",emails);';
 echo 'localStorage.setItem("acts",acts);';
+echo 'console.log(ids+" "+emails+" "+acts);';
 echo '</script>';
 mysqli_close($db);
 ?>
