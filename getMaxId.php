@@ -2,13 +2,12 @@
 
 $db = mysqli_connect("myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com", "juwonkim", "5gkrsus5qks", "records");
 $getcnt = mysqli_query($db, "SELECT COUNT(*)  FROM LOG ");
-$getids = mysqli_query($db, "SELECT id  FROM LOG ");
-$getemail = mysqli_query($db, "SELECT email  FROM LOG ");
-$getact = mysqli_query($db, "SELECT deactivate  FROM LOG ");
+$getinfos = mysqli_query($db, "SELECT id email deactivate FROM LOG ");
 $row = mysqli_fetch_row($getcnt);
-$row1 = mysqli_fetch_row($getids);
-$row2 = mysqli_fetch_row($getemail);
-$row3 = mysqli_fetch_row($getact);
+$row4 = mysql_fetch_array($getinfos, MYSQL_ASSOC);
+$row1 = $row4['id'];
+$row2 = $row4['email'];
+$row3 = $row4['deactivate'];
 echo $row[0];
 echo '<script type="text/javascript">';
 echo 'var cnt = ' .$row[0].';';
