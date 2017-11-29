@@ -132,12 +132,12 @@
             var actarray = acts.split(",");
             console.log(ids+","+emails+","+acts);
             for(var i = 0 ; i < parseInt(cnt) ; i++){
-                tablehtml += "<tr>";
-                tablehtml += "<td> </td>";
-                tablehtml += "<td>"+idarray[i]+"</td>";
-                tablehtml += "<td>"+emailarray[i]+"</td>";
-                tablehtml += "<td>"+actarray[i]+"</td>";
-                tablehtml += "</tr>";
+                tablehtml += "<tr>\n";
+                tablehtml += "<td> </td>\n";
+                tablehtml += "<td>"+idarray[i]+"</td>\n";
+                tablehtml += "<td>"+emailarray[i]+"</td>\n";
+                tablehtml += "<td>"+actarray[i]+"</td>\n";
+                tablehtml += "</tr>\n";
                 /*tablescript.push("<tr>");
                 tablescript.push("<td> </td>");
                 tablescript.push("<td>"+idarray[i]+'</td>');
