@@ -73,8 +73,7 @@
             </tr>
             </thead>
           </table>
-          <tbody>
-            <div id="info"></div>
+          <tbody id ="info">
           </tbody>
 
         </div>
@@ -133,19 +132,14 @@
             var actarray = acts.split(",");
             console.log(ids+","+emails+","+acts);
             for(var i = 0 ; i < parseInt(cnt) ; i++){
-                var newrow = document.createElement('tr');
-                var newblank = document.createElement('td');
-                var newid = document.createElement('td');
-                var newemail = document.createElement('td');
-                var newact = document.createElement('td');
+                var newrow = tabledoc.insertRow(i);
+                var newblank = newrow.insertCell(0);
+                var newid = newrow.insertCell(1);
+                var newemail = newrow.insertCell(2);
+                var newact = newrow.insertCell(3);
                 newid.innerHTML = idarray[i];
                 newemail.innerHTML = emailarray[i];
                 newact.innerHTML = actarray[i];
-                newrow.appendChild(newblank);
-                newrow.appendChild(newid);
-                newrow.appendChild(newemail);
-                newrow.appendChild(newact);
-                tabledoc.innerHTML += newrow.innerHTML;
             }
         }
 
