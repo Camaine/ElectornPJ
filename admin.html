@@ -63,7 +63,7 @@
 
         <div class="col-lg-9">
 
-          <table class="table">
+          <table class="table" id = "info">
             <thead>
             <tr>
               <th scope="col">#</th>
@@ -73,7 +73,7 @@
             </tr>
             </thead>
           </table>
-          <tbody id ="info">
+          <tbody>
           </tbody>
 
         </div>
@@ -132,7 +132,7 @@
             var actarray = acts.split(",");
             console.log(ids+","+emails+","+acts);
             for(var i = 0 ; i < parseInt(cnt) ; i++){
-                var newrow = tabledoc.insertRow(0);
+                var newrow = tabledoc.insertRow(i+1);
                 var newblank = newrow.insertCell(0);
                 var newid = newrow.insertCell(1);
                 var newemail = newrow.insertCell(2);
