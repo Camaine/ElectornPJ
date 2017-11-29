@@ -4,10 +4,6 @@ $db = mysqli_connect("myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com", "ju
 $getcnt = mysqli_query($db, "SELECT COUNT(*)  FROM LOG ");
 $getinfos = mysqli_query($db, "SELECT id, email, deactivate FROM LOG ");
 $row = mysqli_fetch_row($getcnt);
-$row4 = mysqli_fetch_array($getinfos, MYSQLI_ASSOC);
-$row1 = $row4['id'];
-$row2 = $row4['email'];
-$row3 = $row4['deactivate'];
 echo $row[0];
 echo '<script type="text/javascript">';
 echo 'var cnt = ' .$row[0].';';
@@ -15,9 +11,10 @@ echo 'var ids;';
 echo 'var emails;';
 echo 'var acts;';
 for($i = 0; $i < $row[0] ; $i++) {
-    echo 'ids+=' . $row1[$i] . '+",";';
-    echo 'emails+=' . $row2[$i] . '+",";';
-    echo 'acts+=' . $row3[$i] . '+",";';
+    $row4 = mysqli_fetch_array($getinfos, MYSQLI_NUM);
+    echo 'ids+=' . $row4[0] . '+",";';
+    echo 'emails+=' . $row4[1] . '+",";';
+    echo 'acts+=' . $row4[2] . '+",";';
 }
 echo 'localStorage.clear();';
 echo 'localStorage.setItem("cnt",cnt);';
