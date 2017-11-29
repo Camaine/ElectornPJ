@@ -132,7 +132,7 @@
             var actarray = acts.split(",");
             console.log(ids+","+emails+","+acts);
             for(var i = 0 ; i < parseInt(cnt) ; i++){
-                var newrow = tabledoc.insertRow(i);
+                var newrow = tabledoc.insertRow(0);
                 var newblank = newrow.insertCell(0);
                 var newid = newrow.insertCell(1);
                 var newemail = newrow.insertCell(2);
