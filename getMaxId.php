@@ -12,9 +12,9 @@ echo 'var emails;';
 echo 'var acts;';
 for($i = 0; $i < $row[0] ; $i++) {
     $row4 = mysqli_fetch_array($getinfos);
-    echo 'ids+=' . $row4[0] . '+",";';
-    echo 'emails+=' . $row4[1] . '+",";';
-    echo 'acts+=' . $row4[2] . '+",";';
+    echo 'ids+="' . $row4[0] . '"+",";';
+    echo 'emails+="' . $row4[1] . '"+",";';
+    echo 'acts+="' . $row4[2] . '"+",";';
 }
 echo 'localStorage.setItem("cnt",cnt);';
 echo 'localStorage.setItem("ids",ids);';
