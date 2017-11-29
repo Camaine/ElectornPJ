@@ -2,7 +2,7 @@
 
 $db = mysqli_connect("myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com", "juwonkim", "5gkrsus5qks", "records");
 $getcnt = mysqli_query($db, "SELECT COUNT(*)  FROM LOG ");
-$getinfos = mysqli_query($db, "SELECT id email deactivate FROM LOG ");
+$getinfos = mysqli_query($db, "SELECT id, email, deactivate FROM LOG ");
 $row = mysqli_fetch_row($getcnt);
 $row4 = mysql_fetch_array($getinfos, MYSQL_ASSOC);
 $row1 = $row4['id'];
