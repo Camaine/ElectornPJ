@@ -11,12 +11,11 @@ echo 'var ids;';
 echo 'var emails;';
 echo 'var acts;';
 for($i = 0; $i < $row[0] ; $i++) {
-    $row4 = mysqli_fetch_array($getinfos, MYSQLI_NUM);
+    $row4 = mysqli_fetch_array($getinfos);
     echo 'ids+=' . $row4[0] . '+",";';
     echo 'emails+=' . $row4[1] . '+",";';
     echo 'acts+=' . $row4[2] . '+",";';
 }
-echo 'localStorage.clear();';
 echo 'localStorage.setItem("cnt",cnt);';
 echo 'localStorage.setItem("ids",ids);';
 echo 'localStorage.setItem("emails",emails);';
