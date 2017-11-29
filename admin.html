@@ -73,8 +73,7 @@
             </tr>
             </thead>
           </table>
-          <tbody>
-            <div id = "info"></div>
+          <tbody id="info">
           </tbody>
 
         </div>
@@ -126,27 +125,27 @@
         createtable();
 
         function createtable(){
+            var tabledoc =document.getElementById('info');
             var tablehtml = "";
             var idarray = ids.split(",");
             var emailarray = emails.split(",");
             var actarray = acts.split(",");
             console.log(ids+","+emails+","+acts);
             for(var i = 0 ; i < parseInt(cnt) ; i++){
-                tablehtml += "<tr>\n";
-                tablehtml += "<td> </td>\n";
-                tablehtml += "<td>"+idarray[i]+"</td>\n";
-                tablehtml += "<td>"+emailarray[i]+"</td>\n";
-                tablehtml += "<td>"+actarray[i]+"</td>\n";
-                tablehtml += "</tr>\n";
-                /*tablescript.push("<tr>");
-                tablescript.push("<td> </td>");
-                tablescript.push("<td>"+idarray[i]+'</td>');
-                tablescript.push("<td>"+emailarray[i]+"</td>");
-                tablescript.push("<td>"+actarray[i]+"</td>");
-                tablescript.push("</tr>");*/
+                var newrow = document.createElement('tr');
+                var newblank = document.createElement('td');
+                var newid = document.createElement('td');
+                var newemail = document.createElement('td');
+                var newact = document.createElement('td');
+                newid.innerHTML = idarray[i];
+                newemail.innerHTML = emailarray[i];
+                newact.innerHTML = actarray[i];
+                newrow.appendChild(newblank);
+                newrow.appendChild(newid);
+                newrow.appendChild(newemail);
+                newrow.appendChild(newact);
+                tabledoc.appendChild(newrow);
             }
-            console.log(tablehtml);
-            document.getElementById('info').innerText = tablehtml;
         }
 
         listAlbums();
