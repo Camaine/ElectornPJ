@@ -139,7 +139,7 @@
                 var newact = newrow.insertCell(3);
                 newid.innerHTML = idarray[i];
                 newemail.innerHTML = emailarray[i];
-                if(actarray[i].contains("0")){
+                if(parseInt(actarray[i]) == 0){
                     newact.innerHTML = "<button>close</button>";
                 }else{
                     newact.innerHTML = "<button>open</button>";
