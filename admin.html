@@ -140,12 +140,24 @@
                 newid.innerHTML = idarray[i];
                 newemail.innerHTML = emailarray[i];
                 if(parseInt(actarray[i]) == 0){
-                    newact.innerHTML = "<button>close</button>";
+                    newact.innerHTML = "<button id = "+ idarray[i].toString() + " onclick=" + "\"ChangeActStat("+idarray[i].toString()+")\"" +">close</button>";
                 }else{
                     newact.innerHTML = "<button>open</button>";
                 }
 
             }
+        }
+
+        function ChangeActStat(inputid){
+            var selectedbtn = document.getElementById(inputid.toString());
+            if(selectedbtn.value.contains("close")){
+                selectedbtn.value = "open";
+                var phpmng = window.open("./MngDbAct.php?act=1&id="+inputid.toString(), '_blank');
+            }else{
+                selectedbtn.value = "close";
+                var phpmng = window.open("./MngDbAct.php?act=0&id="+inputid.toString(), '_blank');
+            }
+
         }
 
         //listAlbums();
