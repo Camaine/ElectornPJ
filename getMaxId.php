@@ -7,7 +7,7 @@ $row = mysqli_fetch_row($getcnt);
 echo $row[0];
 echo '<script type="text/javascript">';
 echo 'var cnt = ' .$row[0].';';
-echo 'var ids = " "';
+echo 'var ids = " ";';
 echo 'var emails = " ";';
 echo 'var acts = " ";';
 for($i = 0; $i < $row[0] ; $i++) {
