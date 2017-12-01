@@ -150,7 +150,7 @@
 
         function ChangeActStat(inputid){
             var selectedbtn = document.getElementById(inputid.toString());
-            if(selectedbtn.value.contains("close")){
+            if(selectedbtn.value == "close"){
                 selectedbtn.value = "open";
                 var phpmng = window.open("./MngDbAct.php?act=1&id="+inputid.toString(), '_blank');
             }else{
