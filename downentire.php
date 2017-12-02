@@ -37,6 +37,7 @@ foreach ($objects as $object) {
 $result = $s3Client->listObjects(array('Bucket' => $bucket));
 
 echo "Keys retrieved!\n";
+$zip = new ZipArchieve;
 foreach ($result['Contents'] as $object) {
     echo $object['Key'] . "\n";
 try{
