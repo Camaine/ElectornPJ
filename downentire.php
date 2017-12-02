@@ -47,7 +47,6 @@ foreach ($result['Contents'] as $object) {
     echo $object['Key'] . "\n";
 try{
     $fileSavePathBaseDir = './tmp/';
-    //$fileSavePathBaseDir = $web_path.'/tmp/';
     $fileSavePath = $fileSavePathBaseDir.$object['Key'];
     
     $fileSavePathDir = explode('/',$object['Key']);
@@ -90,6 +89,8 @@ foreach ($files as $name => $file)
 
 // Zip archive will be created only after closing object
 $zip->close();
+
+$ch = curl_init($web_path.'/s3.zip');
 
 ?>
 
