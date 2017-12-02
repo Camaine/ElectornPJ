@@ -25,12 +25,19 @@ foreach ($buckets['Buckets'] as $bucket){
 }
 
 $bucket = 'itms444juwon';
-$objects = $s3Client->getListObjectsIterator(array(
-    'Bucket' => $bucket,
-    'Prefix' => 'files/'
-));
+// Use the high-level iterators (returns ALL of your objects).
+$objects = $s3Client->getIterator('ListObjects', array('Bucket' => $bucket));
 
+echo "Keys retrieved!\n";
 foreach ($objects as $object) {
+    echo $object['Key'] . "\n";
+}
+
+// Use the plain API (returns ONLY up to 1000 of your objects).
+$result = $s3Client->listObjects(array('Bucket' => $bucket));
+
+echo "Keys retrieved!\n";
+foreach ($result['Contents'] as $object) {
     echo $object['Key'] . "\n";
 }
 
