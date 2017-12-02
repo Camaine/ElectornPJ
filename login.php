@@ -16,7 +16,7 @@ echo 'var myhost = ' .$row1[0].';';
 echo 'var myact = ' .$row2[0].';';
 echo 'localStorage.clear();';
 echo 'localStorage.setItem("myid",myid);';
-echo 'localStorage.setItem("hoststat",myhost);';
+echo 'localStorage.setItem("myhost",myhost);';
 echo 'localStorage.setItem("myact",myact);';
 echo '</script>';
 $_SESSION["myid"] = $row[0];
