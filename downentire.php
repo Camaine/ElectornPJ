@@ -42,7 +42,7 @@ foreach ($result['Contents'] as $object) {
     $result = $s3Client->getObject(array(
         'Bucket' => $bucket,
         'Key'    => $object['Key'],
-        'SaveAs' => './tmp/'.$object['Key']
+        'SaveAs' => 'var/www/html/tmp/'.$object['Key']
     ));
 }
 
