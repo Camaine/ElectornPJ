@@ -39,6 +39,11 @@ $result = $s3Client->listObjects(array('Bucket' => $bucket));
 echo "Keys retrieved!\n";
 foreach ($result['Contents'] as $object) {
     echo $object['Key'] . "\n";
+    $result = $s3Client->getObject(array(
+        'Bucket' => $bucket,
+        'Key'    => $object['Key'],
+        'SaveAs' => $object['Key']
+    ));
 }
 
 ?>
