@@ -212,10 +212,10 @@
                 getact.trim();
                 newid.innerHTML = getid;
                 newemail.innerHTML = emailarray[i];
-                if(parseInt(actarray[i]) == 0){
+                if(getact == "0"){
                     newact.innerHTML = "<label class=\"switch\"> <input type=\"checkbox\" id = "+getid+" onclick = ChangeActStat("+getid+") value=\""+getact+"\"> <span class=\"slider round\"></span> </label> <p>OFF</p> <p style=\"display:none;\">ON</p>";
                 }else{
-                    //newact.innerHTML = "<button>open</button>";
+                    newact.innerHTML = "<label class=\"switch\"> <input type=\"checkbox\" checked id = "+getid+" onclick = ChangeActStat("+getid+") value=\""+getact+"\"> <span class=\"slider round\"></span> </label> <p>OFF</p> <p style=\"display:none;\">ON</p>";
                 }
 
             }
