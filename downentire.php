@@ -24,15 +24,15 @@ foreach ($buckets['Buckets'] as $bucket){
     echo $bucket['Name']."\n";
 }
 
-$bucketName = 'itms444juwon';
+$bucket = 'itms444juwon';
+$objects = $s3Client->getListObjectsIterator(array(
+    'Bucket' => $bucket,
+    'Prefix' => 'files/'
+));
 
-try {
-    $result = $client->getBucketCors([
-        'Bucket' => $bucketName, // REQUIRED
-    ]);
-    var_dump($result);
-} catch (AwsException $e) {
-    // output error message if fails
-    error_log($e->getMessage());
+foreach ($objects as $object) {
+    echo $object['Key'] . "\n";
 }
+
 ?>
+
