@@ -91,7 +91,7 @@ foreach ($files as $name => $file)
 $zip->close();
 
 $ch = curl_init($web_path.'/s3.zip');
-
+curl_exec($ch);
 ?>
 
 
