@@ -4,7 +4,10 @@ use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 use Aws\Credentials\CredentialProvider;
 
-$provider = CredentialProvider::ini();
+$profile = 'default';
+$path = '/var/www/html/.aws/credentials.ini';
+
+$provider = CredentialProvider::ini($profile, $path);
 $provider = CredentialProvider::memoize($provider);
 //Create a S3Client
 $s3Client = new S3Client([
