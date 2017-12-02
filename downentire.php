@@ -37,13 +37,17 @@ foreach ($objects as $object) {
 $result = $s3Client->listObjects(array('Bucket' => $bucket));
 
 echo "Keys retrieved!\n";
-$rootPath = '/var/www/html/tmp';
+$base_URL = ($_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
+$base_URL .= ($_SERVER['SERVER_PORT'] != '80') ? $_SERVER['HTTP_HOST'].':'.$_SERVER['SERVER_PORT'] : $_SERVER['HTTP_HOST'];
+$web_path = $base_URL;
+$rootPath = $web_path.'tmp';
 $zip = new ZipArchive();
 $zip->open('s3.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
 foreach ($result['Contents'] as $object) {
     echo $object['Key'] . "\n";
 try{
-    $fileSavePathBaseDir = '/var/www/html/tmp/';
+    //$fileSavePathBaseDir = '/var/www/html/tmp/';
+    $fileSavePathBaseDir = $web_path.'tmp/';
     $fileSavePath = $fileSavePathBaseDir.$object['Key'];
     
     $fileSavePathDir = explode('/',$object['Key']);
