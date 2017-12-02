@@ -208,6 +208,8 @@
                 var newact = newrow.insertCell(3);
                 var getid = idarray[i];
                 var getact = actarray[i];
+                getid.trim();
+                getact.trim();
                 newid.innerHTML = getid;
                 newemail.innerHTML = emailarray[i];
                 if(parseInt(actarray[i]) == 0){
