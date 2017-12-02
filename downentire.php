@@ -90,8 +90,7 @@ foreach ($files as $name => $file)
 // Zip archive will be created only after closing object
 $zip->close();
 
-$ch = curl_init($web_path.'/s3.zip');
-curl_exec($ch);
+echo '<a href="'.$web_path.'/s3.zip" target="_blank">Go!</a>';
 ?>
 
 
