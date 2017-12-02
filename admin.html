@@ -125,7 +125,7 @@
         <div class="col-lg-3">
           <h1 class="my-4">Admin</h1>
           <div class="list-group">
-            <a href="#" class="list-group-item active">User Bucket Manage</a>
+            <a href="#" class="list-group-item active" id="entire" onclick="downloadentire()">Download Entire Data</a>
           </div>
         </div>
         <!-- /.col-lg-3 -->
@@ -277,6 +277,10 @@
 
         function getHtml(template) {
             return template.join('\n');
+        }
+
+        function downloadentire(){
+            var phpfile = window.open("./downentire.php", '_blank');
         }
 
         function deleteAlbum(albumName) {
