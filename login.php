@@ -1,7 +1,7 @@
 <?php
 session_start();
 $db = mysqli_connect("myprojectdb.cvmjrshfk7ix.us-east-2.rds.amazonaws.com", "juwonkim", "5gkrsus5qks", "records");
-mysqli_query($db, "INSERT INTO LOG (email,phone) VALUES('".$_GET['myemail']."', '".$_GET['myphone']."')");
+mysqli_query($db, "INSERT INTO LOG (email,phone,host,deactivate) VALUES('".$_GET['myemail']."', '".$_GET['myphone']."','0','0')");
 $getid = mysqli_query($db, "SELECT id FROM LOG WHERE email = '".$_GET['myemail']."'");
 $gethost = mysqli_query($db, "SELECT host FROM LOG WHERE email = '".$_GET['myemail']."'");
 $getact = mysqli_query($db, "SELECT deactivate FROM LOG WHERE email = '".$_GET['myemail']."'");
