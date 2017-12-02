@@ -9,10 +9,11 @@ $provider = CredentialProvider::defaultProvider();
 $s3Client = new S3Client([
     'region' => 'us-west-2',
     'version' => '2006-03-01',
-    'credentials' => $provider
+    'provider' => 'default'
 ]);
 
 echo "Credential OK";
+
 //Listing all S3 Bucket
 $buckets = $s3Client->listBuckets();
 foreach ($buckets['Buckets'] as $bucket){
