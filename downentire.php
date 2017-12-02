@@ -40,10 +40,22 @@ echo "Keys retrieved!\n";
 foreach ($result['Contents'] as $object) {
     echo $object['Key'] . "\n";
 try{
+    $fileSavePathBaseDir = '/var/www/html/tmp/';
+    $fileSavePath = $fileSavePathBaseDir.$object['Key'];
+
+    $fileSavePathDir = explode('/',$object['Key']);
+
+    if(count($fileSavePathDir) > 1){
+        $fileSavePathDir = $fileSavePathBaseDir.$fileSavePathDir[0];
+        if(!is_dir($fileSavePathDir)){
+            mkdir($fileSavePathDir);
+        }
+    }
+
     $result = $s3Client->getObject(array(
         'Bucket' => $bucket,
         'Key'    => $object['Key'],
-        'SaveAs' => 'var/www/html/tmp/'.$object['Key']
+        'SaveAs' => $fileSavePath
     ));
 } catch (S3Exception $e) {
     echo $e->getMessage() . "\n";
