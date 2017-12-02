@@ -5,7 +5,7 @@ use Aws\Exception\AwsException;
 
 //Create a S3Client
 $s3Client = new S3Client([
-    'region' => 'us-east-2',
+    'region' => 'us-west-2',
     'version' => '2006-03-01'
 ]);
 //Listing all S3 Bucket
