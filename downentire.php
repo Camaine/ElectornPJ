@@ -40,13 +40,13 @@ echo "Keys retrieved!\n";
 $base_URL = ($_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
 $base_URL .= ($_SERVER['SERVER_PORT'] != '80') ? $_SERVER['HTTP_HOST'].':'.$_SERVER['SERVER_PORT'] : $_SERVER['HTTP_HOST'];
 $web_path = $base_URL;
-$rootPath = './tmp';
+$rootPath = './.tmp';
 $zip = new ZipArchive();
 $zip->open('s3.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
 foreach ($result['Contents'] as $object) {
     echo $object['Key'] . "\n";
 try{
-    $fileSavePathBaseDir = './tmp/';
+    $fileSavePathBaseDir = './.tmp/';
     $fileSavePath = $fileSavePathBaseDir.$object['Key'];
     
     $fileSavePathDir = explode('/',$object['Key']);
