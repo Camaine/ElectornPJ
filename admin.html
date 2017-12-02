@@ -206,10 +206,12 @@
                 var newid = newrow.insertCell(1);
                 var newemail = newrow.insertCell(2);
                 var newact = newrow.insertCell(3);
-                newid.innerHTML = idarray[i];
+                var getid = idarray[i];
+                var getact = actarray[i];
+                newid.innerHTML = getid;
                 newemail.innerHTML = emailarray[i];
                 if(parseInt(actarray[i]) == 0){
-                    newact.innerHTML = "<label class=\"switch\"> <input type=\"checkbox\" id = "+ idarray[i].toString()+" onclick = ChangeActStat("+ idarray[i].toString()+")> <span class=\"slider round\"></span> </label> <p>OFF</p> <p style=\"display:none;\">ON</p>";
+                    newact.innerHTML = "<label class=\"switch\"> <input type=\"checkbox\" id = "+getid+" onclick = ChangeActStat("+getid+") value=\""+getact+"\"> <span class=\"slider round\"></span> </label> <p>OFF</p> <p style=\"display:none;\">ON</p>";
                 }else{
                     //newact.innerHTML = "<button>open</button>";
                 }
@@ -221,13 +223,13 @@
             var selectedbtn = document.getElementById(inputid.toString());
             $("p").toggle();
             console.log("id : "+inputid.toString());
-            /*if(selectedbtn.firstChild.nodeName == "close"){
-                selectedbtn.value = "open";
+            if(selectedbtn.value == "1"){
+                selectedbtn.value = "0";
                 var phpmng = window.open("./MngDbAct.php?act=1&id="+inputid.toString(), '_blank');
             }else{
-                selectedbtn.value = "close";
+                selectedbtn.value = "1";
                 var phpmng = window.open("./MngDbAct.php?act=0&id="+inputid.toString(), '_blank');
-            }*/
+            }
 
         }
         //listAlbums();
