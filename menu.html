@@ -83,10 +83,15 @@
 <script>
     var myid = localStorage.getItem('myid');
     var myhost = localStorage.getItem('myhost');
+    var myact = localStorage.getItem('myact');
     var adminbtn = document.getElementById("adminbtn");
     console.log(myid);
-    if(myhost.isEqual("1")){
+    if(myhost=="1"){
         adminbtn.style.display = 'none';
+    }
+    if(myact == "1"){
+        alert("This account is closed");
+        window.history.back();
     }
 </script>
 <!-- build:js scripts/main.min.js -->
