@@ -9,6 +9,7 @@ $row = mysqli_fetch_row($getid);
 $row1 = mysqli_fetch_row($gethost);
 $row2 = mysqli_fetch_row($getact);
 echo $row[0];
+echo $row1[0];
 echo '<script type="text/javascript">';
 echo 'var myid = ' .$row[0].';';
 echo 'var myhost = ' .$row1[0].';';
