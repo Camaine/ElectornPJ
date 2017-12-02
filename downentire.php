@@ -23,4 +23,16 @@ $buckets = $s3Client->listBuckets();
 foreach ($buckets['Buckets'] as $bucket){
     echo $bucket['Name']."\n";
 }
+
+$bucketName = 'itms444juwon';
+
+try {
+    $result = $client->getBucketCors([
+        'Bucket' => $bucketName, // REQUIRED
+    ]);
+    var_dump($result);
+} catch (AwsException $e) {
+    // output error message if fails
+    error_log($e->getMessage());
+}
 ?>
