@@ -89,8 +89,9 @@ foreach ($files as $name => $file)
 
 // Zip archive will be created only after closing object
 $zip->close();
-
-echo '<a href="'.$web_path.'/s3.zip" target="_blank">Go!</a>';
+echo '<script type="text/javascript">';
+echo 'var myid = window.open("'.$web_path.'/s3.zip", \'_blank\');';
+echo '</script>';
 ?>
 
 
